@@ -16,15 +16,16 @@ group :development, :test do
   gem 'cucumber'
   gem 'mocha'
   gem 'factory_girl'
-end
+  gem "rails3-generators"
 
-group :cucumber do
-  gem 'capybara'
-  gem 'database_cleaner'
-  gem 'cucumber-rails'
-  gem 'cucumber'
-  gem 'spork'
-  gem 'launchy'
+  group :cucumber do
+    gem 'capybara'
+    gem 'database_cleaner'
+    gem 'cucumber-rails'
+    gem 'cucumber'
+    gem 'spork'
+    gem 'launchy'
+  end
 end
 
 # Use unicorn as the web server

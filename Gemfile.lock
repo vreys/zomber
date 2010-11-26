@@ -104,6 +104,7 @@ GEM
       activesupport (= 3.0.1)
       bundler (~> 1.0.0)
       railties (= 3.0.1)
+    rails3-generators (0.14.0)
     railties (3.0.1)
       actionpack (= 3.0.1)
       activesupport (= 3.0.1)
@@ -158,6 +159,7 @@ DEPENDENCIES
   mocha
   mongrel
   rails
+  rails3-generators
   rspec-rails (>= 2.0.0)
   ruby-debug
   spork
