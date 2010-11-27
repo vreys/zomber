@@ -6,17 +6,23 @@ class SerialContainer
   def self.build(path)
     return nil unless File.exists?(path)
     meta = SerialMeta.build(path)
+    seasons = []
     
-    self.new(:meta => meta)
+    Dir[File.join(path, '*')].select{|d| File.directory?(d)}.sort.each_with_index do |season_path, index|
+      seasons << SeasonContainer.build(season_path, (index+1))
+    end
+    
+    self.new(:meta => meta, :seasons => seasons)
   end
 
-  attr_reader :meta
+  attr_reader :meta, :seasons
 
   def initialize(attrs)
     self.meta = attrs[:meta]
+    self.seasons = attrs[:seasons] || []
   end
 
   protected
 
-  attr_writer :meta
+  attr_writer :meta, :seasons
 end

@@ -19,8 +19,8 @@ Then /^я не должен увидеть список сериалов$/ do
   page.should have_no_css('#serials_list')
 end
 
-Given /^есть следующие сериалы:$/ do |serials|
-  KEY_ALIASES = {'название' => :title, 'описание' => :description}
+Given /^есть (?:следующие|такие) сериалы:$/ do |serials|
+  KEY_ALIASES = {'название' => :title, 'описание' => :description, 'количество сезонов' => :count_seasons}
 
   serials.hashes.each do |options|
     attrs = {}
@@ -42,4 +42,10 @@ end
 
 Then /^я должен увидеть постер$/ do
   page.should have_css('#poster.serial[src^="/images/posters"]')
+end
+
+Then /^я должен увидеть список серий для (\d+) (?:сезонов|сезона)$/ do |count_seasons|
+  (1..count_seasons.to_i).to_a.each do |index|
+    page.should have_content("#{index} сезон")
+  end
 end

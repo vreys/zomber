@@ -4,10 +4,8 @@ describe SerialContainer do
   describe "#build" do
     context "when calling with path to an existant serial directory" do
       before do
-        @path = SerialRepoFactory.create
-        @meta = Object.new
-
-        SerialMeta.stubs(:build).returns(@meta)
+        @count_seasons = 5
+        @path = SerialRepoFactory.create(:count_seasons => @count_seasons)
       end
 
       it "should build serial meta" do
@@ -16,12 +14,31 @@ describe SerialContainer do
         SerialContainer.build(@path)
       end
 
-      it "should create new container instance with meta just builded" do
-        SerialContainer.stubs(:new).with(:meta => @meta).once
+      it "should build season containers" do
+        (1..@count_seasons).to_a.each do |index|
+          SeasonContainer.stubs(:build).with(File.join(@path, "season #{index}").to_s, index).once
+        end
+
         SerialContainer.build(@path)
       end
 
-      it "should return new SerialContainer intance" do
+      it "should create new container instance" do
+        meta = Object.new
+        SerialMeta.stubs(:build).returns(meta)
+
+        seasons = []
+        (1..@count_seasons).to_a.each do |index|
+          season = Object.new
+          SeasonContainer.stubs(:build).with(File.join(@path, "season #{index}").to_s, index).returns(season)
+
+          seasons << season
+        end
+        
+        SerialContainer.stubs(:new).with(:meta => meta, :seasons => seasons).once
+        SerialContainer.build(@path)
+      end
+
+      it "should return serial container" do
         result = SerialContainer.build(@path)
         result.should be_an_instance_of(SerialContainer)
       end
@@ -40,14 +57,20 @@ describe SerialContainer do
   end
 
   describe "validations" do
-    before do
-      @valid_attributes = {
-        :meta => SerialMetaFactory.create
-      }
-    end
-
-    subject { SerialContainer.new(@valid_attributes) }
+    subject { SerialContainerFactory.create }
 
     it { should validate_presence_of(:meta) }
+  end
+
+  describe "a new instance" do
+    subject { SerialContainerFactory.create }
+
+    it "should have seasons" do
+      subject.seasons.should be_an_instance_of(Array)
+    end
+
+    it "should have meta" do
+      subject.meta.should be_an_instance_of(SerialMeta)
+    end
   end
 end

@@ -3,3 +3,11 @@
 <p><%= @serial.description %></p>
 
 <img id="poster" src="<%= @serial.poster.url %>" class="serial"/>
+
+<div id="serial-seasons">
+  <% @serial.seasons.each do |season| %>
+    <ul>
+      <li><%= season.index %> сезон</li>
+    </ul>
+  <% end %>
+</div>

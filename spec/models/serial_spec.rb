@@ -6,6 +6,7 @@ describe Serial do
   it { should validate_presence_of(:description) }
   it { should have_attached_file(:poster) }
   it { should validate_attachment_presence(:poster) }
+  it { should have_many(:seasons) }
 
   describe "#to_param" do
     before do
@@ -19,8 +20,7 @@ describe Serial do
 
   describe "#rebuild" do
     before do
-      @path = SerialRepoFactory.create
-      @container = SerialContainer.build(@path)
+      @container = SerialContainerFactory.create
     end
 
     it "should create new Serial" do
@@ -35,6 +35,19 @@ describe Serial do
       serial.title.should eql(@container.meta.title)
       serial.slug.should eql(@container.meta.slug)
       serial.description.should eql(@container.meta.description)
+    end
+
+    it "should rebuild seasons" do
+      serial = Object.new
+      serial.stubs(:id).returns(1)
+      
+      Serial.stubs(:create!).returns(serial)
+      
+      @container.seasons.each do |season_container|
+        Season.stubs(:rebuild).with(season_container, serial.id).once
+      end
+
+      Serial.rebuild(@container)
     end
   end
 end
