@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module NavigationHelpers
   # Maps a name to a path. Used by the
   #
@@ -9,6 +10,9 @@ module NavigationHelpers
     case page_name
 
     when /the home\s?page/
+      '/'
+
+    when /раздел сериалов/
       '/'
 
     # Add more mappings here.
