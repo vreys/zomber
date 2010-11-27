@@ -1,4 +1,7 @@
 After do
-  serials_dirpath = Rails.root.join('tmp', 'serials')
-  FileUtils.rm_r(Rails.root.join('tmp', 'serials')) if File.exists?(serials_dirpath)
+  cleanup_dirs = [REPOS_PATH, POSTERS_PATH]
+
+  cleanup_dirs.each do |dir_path|
+    FileUtils.rm_r(dir_path) if File.exists?(dir_path)
+  end
 end

@@ -90,6 +90,9 @@ GEM
       fastthread (>= 1.0.1)
       gem_plugin (>= 0.2.3)
     nokogiri (1.4.4)
+    paperclip (2.3.5)
+      activerecord
+      activesupport
     polyglot (0.3.1)
     rack (1.2.1)
     rack-mount (0.6.13)
@@ -156,6 +159,7 @@ DEPENDENCIES
   launchy (= 0.3.7)
   mocha (= 0.9.9)
   mongrel (= 1.1.5)
+  paperclip (= 2.3.5)
   rails (= 3.0.1)
   rails3-generators (= 0.14.0)
   rspec (= 2.1.0)

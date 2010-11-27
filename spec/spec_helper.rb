@@ -2,6 +2,7 @@
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'paperclip/matchers'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -11,6 +12,8 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 Dir[Rails.root.join("test/factories/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
+  config.include Paperclip::Shoulda::Matchers
+  
   # == Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -27,4 +30,12 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+
+  config.after(:each, :type => :model) do
+    cleanup_dirs = [REPOS_PATH, POSTERS_PATH]
+
+    cleanup_dirs.each do |dir_path|
+      FileUtils.rm_r(dir_path) if File.exists?(dir_path)
+    end
+  end
 end

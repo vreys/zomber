@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.0.1'
 gem 'sqlite3-ruby', '1.3.2', :require => 'sqlite3'
+gem 'paperclip', '2.3.5'
 
 group :development, :test do
   gem 'mongrel', '1.1.5'
