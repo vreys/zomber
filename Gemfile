@@ -16,6 +16,7 @@ group :development, :test do
   gem "rails3-generators", '0.14.0'
   gem 'cucumber', '0.9.4'
   gem 'cucumber-rails', '0.3.2'
+  gem 'remarkable_activerecord', '>=4.0.0.alpha4'
   
   group :cucumber do
     gem 'capybara', '0.4.0'
