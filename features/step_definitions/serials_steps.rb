@@ -41,5 +41,5 @@ When /^я захожу на страницу сериала "([^\"]*)"$/ do |ser
 end
 
 Then /^я должен увидеть постер$/ do
-  page.should have_css('#poster.serial[src]')
+  page.should have_css('#poster.serial[src^="/images/posters"]')
 end
