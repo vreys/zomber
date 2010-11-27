@@ -8,6 +8,12 @@ class Serial < ActiveRecord::Base
   validates_presence_of :description
   validates_attachment_presence :poster
 
+  class << self
+    def rebuild(container)
+      Serial.create!(container.meta.attributes)
+    end
+  end
+
   def to_param
     self.slug
   end

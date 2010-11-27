@@ -16,4 +16,25 @@ describe Serial do
       @serial.to_param.should eql(@serial.slug)
     end
   end
+
+  describe "#rebuild" do
+    before do
+      @path = SerialRepoFactory.create
+      @container = SerialContainer.build(@path)
+    end
+
+    it "should create new Serial" do
+      lambda { Serial.rebuild(@container) }.should change(Serial, :count).from(0).to(1)
+    end
+
+    it "should assign attributes to just created Serial according to the meta" do
+      Serial.rebuild(@container)
+
+      serial = Serial.first
+
+      serial.title.should eql(@container.meta.title)
+      serial.slug.should eql(@container.meta.slug)
+      serial.description.should eql(@container.meta.description)
+    end
+  end
 end

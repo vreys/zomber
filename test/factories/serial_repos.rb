@@ -17,5 +17,7 @@ module SerialRepoFactory
     f = File.new(file_path, 'w')
     f.puts(attrs[:title], attrs[:slug], attrs[:description])
     f.close
+
+    dir_path.to_s
   end
 end
