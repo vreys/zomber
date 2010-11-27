@@ -1,30 +1,26 @@
 source 'http://rubygems.org'
 
-gem 'rails'
-
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
-gem 'sqlite3-ruby', :require => 'sqlite3'
+gem 'rails', '3.0.1'
+gem 'sqlite3-ruby', '1.3.2', :require => 'sqlite3'
 
 group :development, :test do
-  gem 'mongrel'
-  gem 'ruby-debug'
-  gem 'wirble'
-  gem "rspec-rails", ">= 2.0.0"
-  gem 'faker'
-  gem 'cucumber'
-  gem 'mocha'
-  gem 'factory_girl'
-  gem "rails3-generators"
-
+  gem 'mongrel', '1.1.5'
+  gem 'ruby-debug', '0.10.4'
+  gem 'wirble', '0.1.3'
+  gem 'rspec', '2.1.0'
+  gem "rspec-rails", "2.1.0"
+  gem 'faker', '0.3.1'
+  gem 'mocha', '0.9.9'
+  gem 'factory_girl', '1.3.2'
+  gem "rails3-generators", '0.14.0'
+  gem 'cucumber', '0.9.4'
+  gem 'cucumber-rails', '0.3.2'
+  
   group :cucumber do
-    gem 'capybara'
-    gem 'database_cleaner'
-    gem 'cucumber-rails'
-    gem 'cucumber'
-    gem 'spork'
-    gem 'launchy'
+    gem 'capybara', '0.4.0'
+    gem 'database_cleaner', '0.6.0'
+    gem 'spork', '0.8.4'
+    gem 'launchy', '0.3.7'
   end
 end
 
