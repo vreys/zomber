@@ -49,3 +49,44 @@ Then /^я должен увидеть список серий для (\d+) (?:с
     page.should have_content("#{index} сезон")
   end
 end
+
+Given /^есть такой сериал:$/ do |table|
+  KEY_ALIASES = {'название' => :title, 'описание' => :description, 'количество сезонов' => :count_seasons}
+  COUNT_EPISODES = /(\d+) (?:эпизод(?:а|ов)|cери(?:я|и|й))/i
+  
+  attrs = {}
+  seasons = []
+  
+  table.raw.each do |options|
+    unless (options[0] =~ /(\d+) сезон/).nil?
+      seasons.push((options[1].match(/^(\d+)(?:.+)/)[1]).to_i)
+    else
+      attrs[KEY_ALIASES[options[0]]] = options[1]
+    end
+  end
+
+  if seasons.length > 0
+    attrs[:count_seasons] = 0
+  end
+
+  serial_path = SerialRepoFactory.create(attrs)
+
+  seasons.each_with_index do |count_episodes, season_index|
+    SeasonRepoFactory.create(serial_path, season_index, count_episodes)
+  end
+  
+  Repository.index!
+end
+
+Then /^я должен увидеть такой список сезонов:$/ do |table|
+  table.raw.each do |options|
+    season_index = options[0].match(/^(\d+).+/)[1].to_i
+    count_episodes = options[1].match(/^(\d+).+/)[1].to_i
+
+    page.should have_content("#{season_index} сезон")
+
+    (1..count_episodes).to_a.each do |episode_index|
+      page.should have_content("#{episode_index} эпизод")
+    end
+  end
+end

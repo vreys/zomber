@@ -8,17 +8,32 @@ describe Season do
 
   describe "relations" do
     it { should belong_to(:serial) }
+    it { should have_many(:episodes) }
   end
 
   describe "#rebuild" do
     before do
       @index = 5
       @serial = Factory(:serial)
-      @container = SeasonContainerFactory.create(nil, @index)
+      @count_episodes = 3
+      @container = SeasonContainerFactory.create(nil, @index, @count_episodes)
     end
 
     it "should create new Season" do
       lambda { Season.rebuild(@container, @serial.id) }.should change(@serial.seasons, :count).from(0).to(1)
+    end
+
+    it "should rebuild Episodes" do
+      season = Object.new
+      season.stubs(:id).returns(99)
+
+      Season.stubs(:create!).returns(season)
+
+      @container.episodes.each do |episode_container|
+        Episode.stubs(:rebuild).with(episode_container, season.id).once
+      end
+
+      Season.rebuild(@container, @serial.id)
     end
 
     it "should assign valid index to just created Season" do

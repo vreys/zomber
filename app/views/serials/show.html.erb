@@ -7,7 +7,15 @@
 <div id="serial-seasons">
   <% @serial.seasons.each do |season| %>
     <ul>
-      <li><%= season.index %> сезон</li>
+      <li class="season">
+        <h2><%= season.index %> сезон</h2>
+
+        <ul class="episodes">
+          <% season.episodes.each do |episode| %>
+            <li><%= episode.index %> эпизод</li>
+          <% end %>
+        </ul>
+      </li>
     </ul>
   <% end %>
 </div>

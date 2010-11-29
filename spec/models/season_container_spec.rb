@@ -4,7 +4,8 @@ describe SeasonContainer do
   describe "#build" do
     before do
       @index = 1
-      @path = SeasonRepoFactory.create(nil, @index)
+      @count_episodes = 8
+      @path = SeasonRepoFactory.create(nil, @index, @count_episodes)
     end
 
     it "should build meta" do
@@ -14,11 +15,29 @@ describe SeasonContainer do
       SeasonContainer.build(@path, @index)
     end
 
-    it "should create container instance with just builded meta" do
+    it "should build episode containers" do
+      (1..@count_episodes).to_a.each do |episode_index|
+        EpisodeContainer.stubs(:build).with(episode_index).once
+      end
+
+      SeasonContainer.build(@path, @index)
+    end
+
+    it "should create container instance" do
       meta = Object.new
+      episodes = []
 
       SeasonMeta.stubs(:build).returns(meta)
-      SeasonContainer.stubs(:new).with(:meta => meta).once
+
+      (1..@count_episodes).to_a.each do |episode_index|
+        episode = Object.new
+        
+        EpisodeContainer.stubs(:build).with(episode_index).returns(episode)
+
+        episodes << episode
+      end
+      
+      SeasonContainer.stubs(:new).with(:meta => meta, :episodes => episodes).once
 
       SeasonContainer.build(@path, @index)
     end
@@ -41,6 +60,10 @@ describe SeasonContainer do
 
     it "should have meta" do
       subject.meta.should be_an_instance_of(SeasonMeta)
+    end
+
+    it "should have episodes" do
+      subject.episodes.should be_an_instance_of(Array)
     end
   end
 
