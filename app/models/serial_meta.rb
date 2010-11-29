@@ -5,6 +5,7 @@ class SerialMeta
   validates_presence_of :slug
   validates_presence_of :description
   validates_presence_of :poster
+  validates_presence_of :thumbnail
   
   class << self
     def build(path)
@@ -24,15 +25,17 @@ class SerialMeta
         :title => lines[0],
         :slug => lines[1],
         :description => lines[2],
-        :poster => File.join(path, 'poster.jpg')
+        :poster => File.join(path, 'poster.jpg'),
+        :thumbnail => File.join(path, 'thumbnail.jpg')
       }
     end
   end
 
-  attr_reader :title, :slug, :description, :poster
+  attr_reader :title, :slug, :description, :poster, :thumbnail
 
   def initialize(data)
     self.poster = File.new(data.delete(:poster))
+    self.thumbnail = File.new(data.delete(:thumbnail))
 
     data.each do |key, value|
       self.send("#{key}=", value)
@@ -42,7 +45,7 @@ class SerialMeta
   def attributes
     attrs = {}
     
-    [:title, :slug, :description, :poster].each do |attr|
+    [:title, :slug, :description, :poster, :thumbnail].each do |attr|
       attrs[attr] = self.send(attr)
     end
 
@@ -51,5 +54,5 @@ class SerialMeta
 
   protected
 
-  attr_writer :title, :slug, :description, :poster
+  attr_writer :title, :slug, :description, :poster, :thumbnail
 end

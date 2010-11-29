@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101129050615) do
+ActiveRecord::Schema.define(:version => 20101129103635) do
 
   create_table "episodes", :force => true do |t|
     t.integer  "season_id"
@@ -36,6 +36,10 @@ ActiveRecord::Schema.define(:version => 20101129050615) do
     t.string   "poster_content_type"
     t.integer  "poster_file_size"
     t.datetime "poster_updated_at"
+    t.string   "thumbnail_file_name"
+    t.string   "thumbnail_content_type"
+    t.integer  "thumbnail_file_size"
+    t.datetime "thumbnail_updated_at"
   end
 
 end

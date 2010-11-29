@@ -35,6 +35,16 @@ Given /^есть (?:следующие|такие) сериалы:$/ do |serials
   Repository.index!
 end
 
+Then /^я должен увидеть список сериалов в таком порядке:$/ do |serials_table|
+  serials_table.raw.each_with_index do |opts, index|
+    find(:xpath, "//ul[@id='serials_list']/li[#{(index+1)}]/a").text.should eql(opts[0])
+  end
+end
+
+Then /^я должен увидеть (\d+) иконок$/ do |count_icons|
+  all('img.thumb[src^="/images/thumbnails"]').length.should eql(count_icons.to_i)
+end
+
 When /^я захожу на страницу сериала "([^\"]*)"$/ do |serial_title|
   When %Q{я захожу в раздел сериалов}
   When %Q{я иду по ссылке "#{serial_title}"}

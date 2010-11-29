@@ -1,6 +1,7 @@
 <ul id="serials_list">
   <% Serial.all.each do |serial| %>
     <li>
+      <%= image_tag(serial.thumbnail.url, :class => 'thumb') %>
       <%= link_to(serial.title, serial_path(serial)) %>
     </li>
   <% end %>

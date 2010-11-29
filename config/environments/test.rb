@@ -1,5 +1,6 @@
 Hdtv::Application.configure do
   config.paths.posters 'tmp/posters', :load_path => false
+  config.paths.thumbnails 'tmp/thumbnails', :load_path => false
   config.paths.repos 'tmp/repos', :load_path => false
 
   # The test environment is used exclusively to run your application's

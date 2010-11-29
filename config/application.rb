@@ -9,6 +9,7 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 module Hdtv
   class Application < Rails::Application
     config.paths.posters 'public/images/posters', :load_path => false
+    config.paths.thumbnails 'public/images/thumbnails', :load_path => false
     config.paths.repos 'media/repos', :load_path => false
 
     config.generators do |g|

@@ -4,9 +4,14 @@ describe Serial do
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:slug) }
   it { should validate_presence_of(:description) }
+  it { should have_many(:seasons, :dependent => :destroy) }
+  #  it { should have_default_scope(:order => 'title ASC')}
+
   it { should have_attached_file(:poster) }
   it { should validate_attachment_presence(:poster) }
-  it { should have_many(:seasons, :dependent => :destroy) }
+
+  it { should have_attached_file(:thumbnail) }
+  it { should validate_attachment_presence(:thumbnail) }
 
   describe "#to_param" do
     before do
