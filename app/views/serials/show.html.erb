@@ -12,7 +12,9 @@
 
         <ul class="episodes">
           <% season.episodes.each do |episode| %>
-            <li><%= episode.index %> эпизод</li>
+            <li>
+              <%= link_to("#{episode.index} эпизод", serial_episode_path(:serial_id => @serial.slug, :season_index => season.index, :episode_index => episode.index)) %>
+            </li>
           <% end %>
         </ul>
       </li>

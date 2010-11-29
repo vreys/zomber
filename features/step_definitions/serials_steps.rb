@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+SERIAL_KEY_ALIASES = {'название' => :title, 'описание' => :description, 'количество сезонов' => :count_seasons}
+
 Given /^есть (\d+) разных сериалов$/ do |count_serials|
   count_serials.to_i.times { SerialRepoFactory.create }
 
@@ -20,13 +22,11 @@ Then /^я не должен увидеть список сериалов$/ do
 end
 
 Given /^есть (?:следующие|такие) сериалы:$/ do |serials|
-  KEY_ALIASES = {'название' => :title, 'описание' => :description, 'количество сезонов' => :count_seasons}
-
   serials.hashes.each do |options|
     attrs = {}
 
     options.each do |key, value|
-      attrs[KEY_ALIASES[key]] = value
+      attrs[SERIAL_KEY_ALIASES[key]] = value
     end
 
     SerialRepoFactory.create(attrs)
@@ -51,9 +51,6 @@ Then /^я должен увидеть список серий для (\d+) (?:с
 end
 
 Given /^есть такой сериал:$/ do |table|
-  KEY_ALIASES = {'название' => :title, 'описание' => :description, 'количество сезонов' => :count_seasons}
-  COUNT_EPISODES = /(\d+) (?:эпизод(?:а|ов)|cери(?:я|и|й))/i
-  
   attrs = {}
   seasons = []
   
@@ -61,7 +58,7 @@ Given /^есть такой сериал:$/ do |table|
     unless (options[0] =~ /(\d+) сезон/).nil?
       seasons.push((options[1].match(/^(\d+)(?:.+)/)[1]).to_i)
     else
-      attrs[KEY_ALIASES[options[0]]] = options[1]
+      attrs[SERIAL_KEY_ALIASES[options[0]]] = options[1]
     end
   end
 
@@ -89,4 +86,14 @@ Then /^я должен увидеть такой список сезонов:$/ 
       page.should have_content("#{episode_index} эпизод")
     end
   end
+end
+
+When /^я перехожу по ссылке "([^\"]*)" во (\d+) сезоне$/ do |episode, season_index|
+  within(:xpath, "//div[@id='serial-seasons']/ul[#{season_index}]/li") do
+    click_link(episode)
+  end
+end
+
+Then /^я должен увидеть проигрыватель$/ do
+  page.should have_css('#player')
 end
