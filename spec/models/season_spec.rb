@@ -8,7 +8,7 @@ describe Season do
 
   describe "relations" do
     it { should belong_to(:serial) }
-    it { should have_many(:episodes) }
+    it { should have_many(:episodes, :dependent => :destroy) }
   end
 
   describe "#rebuild" do

@@ -6,7 +6,7 @@ describe Serial do
   it { should validate_presence_of(:description) }
   it { should have_attached_file(:poster) }
   it { should validate_attachment_presence(:poster) }
-  it { should have_many(:seasons) }
+  it { should have_many(:seasons, :dependent => :destroy) }
 
   describe "#to_param" do
     before do

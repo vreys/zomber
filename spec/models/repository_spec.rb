@@ -15,11 +15,17 @@ describe Repository, '#index!' do
         @containers << container
         @paths << path
       end
+
+      Serial.stubs(:rebuild)
+    end
+
+    it "should destroy all Serials" do
+      Serial.stubs(:destroy_all).once
+
+      Repository.index!
     end
     
     it "should build container" do
-      Serial.stubs(:rebuild)
-      
       @paths.each do |path|
         SerialContainer.stubs(:build).with(path).once
       end

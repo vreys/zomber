@@ -1,6 +1,6 @@
 class Season < ActiveRecord::Base
   belongs_to :serial
-  has_many :episodes
+  has_many :episodes, :dependent => :destroy
   
   class << self
     def rebuild(container, serial_id)
