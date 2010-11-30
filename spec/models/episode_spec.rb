@@ -8,20 +8,27 @@ describe Episode do
   describe "validation" do
     it { should validate_presence_of(:index) }
     it { should validate_presence_of(:season_id) }
+    it { should validate_presence_of(:webm) }
+    it { should validate_presence_of(:mp4) }
+  end
+
+  describe "attributes" do
+    subject { Factory(:episode).attributes }
+    
+    it { should include('mp4') }
+    it { should include('webm') }
   end
   
-  describe "#rebuild" do
+  describe "#import!" do
     before do
-      @container = EpisodeContainerFactory.create
+      @episode_container = ContainerFactory(:episode)
       @season = Factory(:season)
     end
 
-    it "should create new Episode" do
-      episode = nil
-      lambda { episode = Episode.rebuild(@container, @season.id) }.should change(Episode, :count).from(0).to(1)
+    it "should create Episode with proper attributes" do
+      lambda { @season.episodes.import!(@episode_container) }.should change(@season.episodes, :count).from(0).to(1)
 
-      episode.index.should eql(@container.meta.index)
-      episode.season.should eql(@season)
+      @season.episodes.first.index.should eql(@episode_container.attributes[:index])
     end
   end
 end

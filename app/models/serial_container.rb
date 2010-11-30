@@ -1,28 +1,49 @@
-class SerialContainer
-  include ActiveModel::Validations
+class SerialContainer < RepositoryContainer::Base
+  attributes :title, :slug, :description
 
-  validates_presence_of :meta
-  
-  def self.build(path)
-    return nil unless File.exists?(path)
-    meta = SerialMeta.build(path)
-    seasons = []
-    
-    Dir[File.join(path, '*')].select{|d| File.directory?(d)}.sort.each_with_index do |season_path, index|
-      seasons << SeasonContainer.build(season_path, (index+1))
-    end
-    
-    self.new(:meta => meta, :seasons => seasons)
+  def initialize(path)
+    @path = path
+
+    super(attrs_from_meta_file)
   end
 
-  attr_reader :meta, :seasons
+  def seasons
+    return @seasons if defined?(@seasons)
+    
+    @seasons = []
+    
+    read_seasons.each_with_index do |season_path, index|
+      @seasons << SeasonContainer.new(:path => season_path, :index => (index+1))
+    end
 
-  def initialize(attrs)
-    self.meta = attrs[:meta]
-    self.seasons = attrs[:seasons] || []
+    @seasons
+  end
+
+  def poster
+    File.new(File.join(@path, 'poster.jpg'))
+  end
+
+  def thumbnail
+    File.new(File.join(@path, 'thumbnail.jpg'))
   end
 
   protected
 
-  attr_writer :meta, :seasons
+  def read_seasons
+    Dir[File.join(@path, '*')].select{|d| File.directory?(d)}.sort
+  end
+
+  def attrs_from_meta_file
+    meta_file_name = File.basename(@path)
+
+    f = File.new(File.join(@path, meta_file_name + '.txt'), 'r')
+    lines = f.readlines.map{|l| l.strip}
+    f.close
+
+    {
+      :title => lines[0],
+      :slug => lines[1],
+      :description => lines[2]
+    }
+  end
 end

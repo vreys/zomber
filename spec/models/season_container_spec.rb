@@ -1,70 +1,53 @@
 require 'spec_helper'
 
 describe SeasonContainer do
-  describe "#build" do
+  context "after method new is called with path to season repository" do
     before do
-      @index = 1
-      @count_episodes = 8
-      @path = SeasonRepoFactory.create(nil, @index, @count_episodes)
-    end
-
-    it "should build meta" do
-      SeasonContainer.stubs(:new)
-      SeasonMeta.stubs(:build).with(@path, @index).once
-
-      SeasonContainer.build(@path, @index)
-    end
-
-    it "should build episode containers" do
-      (1..@count_episodes).to_a.each do |episode_index|
-        EpisodeContainer.stubs(:build).with(episode_index).once
-      end
-
-      SeasonContainer.build(@path, @index)
-    end
-
-    it "should create container instance" do
-      meta = Object.new
-      episodes = []
-
-      SeasonMeta.stubs(:build).returns(meta)
-
-      (1..@count_episodes).to_a.each do |episode_index|
-        episode = Object.new
-        
-        EpisodeContainer.stubs(:build).with(episode_index).returns(episode)
-
-        episodes << episode
-      end
+      attrs = {
+        :index => 7
+      }
       
-      SeasonContainer.stubs(:new).with(:meta => meta, :episodes => episodes).once
-
-      SeasonContainer.build(@path, @index)
+      season_path = RepositoryFactory(:season, attrs)
+      @season_container = SeasonContainer.new(attrs.merge(:path => season_path))
+      
+      @expected_attributes = attrs
     end
 
-    it "should return container instance" do
-      result = SeasonContainer.build(@path, @index)
+    it "should properly read meta into attributes" do
+      @season_container.attributes.should eql(@expected_attributes)
+    end
 
-      result.should be_an_instance_of(SeasonContainer)
+    describe "episodes" do
+      before do
+        index = 7
+        
+        season_path = RepositoryFactory(:season,
+                                        :count_episodes => 0,
+                                        :index => index)
+
+        @episode_paths = []
+        
+        7.times.to_a.each do |index|
+          @episode_paths << RepositoryFactory(:episode,
+                                              :season_repo_path => season_path,
+                                              :index => (index+1))
+        end
+
+        @season_container = SeasonContainer.new(:path => season_path,
+                                                :index => index)
+      end
+
+      it "should create EpisodeContainer for each episode" do
+        @episode_paths.each_with_index do |attrs, index|
+          EpisodeContainer.stubs(:new).with(attrs.merge(:index => (index+1))).once
+        end
+
+        @season_container.episodes
+      end
+
+      it "should return array of EpisodeContainers" do
+        @season_container.episodes.map{|e| e.class}.uniq.should eql [EpisodeContainer]
+      end
     end
   end
-
-  describe "validation" do
-    subject { SeasonContainerFactory.create }
-    
-    it { should validate_presence_of(:meta) }
-  end
-
-  describe "a new instance" do
-    subject { SeasonContainerFactory.create }
-
-    it "should have meta" do
-      subject.meta.should be_an_instance_of(SeasonMeta)
-    end
-
-    it "should have episodes" do
-      subject.episodes.should be_an_instance_of(Array)
-    end
-  end
-
 end

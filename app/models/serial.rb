@@ -18,14 +18,15 @@ class Serial < ActiveRecord::Base
   default_scope order('title ASC')
 
   class << self
-    def rebuild(container)
-      serial = Serial.create!(container.meta.attributes)
-
-      container.seasons.each do |season_container|
-        Season.rebuild(season_container, serial.id)
+    def import!(container)
+      serial = self.create!(container.attributes) do |s|
+        s.poster = container.poster
+        s.thumbnail = container.thumbnail
       end
 
-      serial
+      container.seasons.each do |season_container|
+        serial.seasons.import!(season_container)
+      end
     end
   end
 

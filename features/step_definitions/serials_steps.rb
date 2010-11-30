@@ -2,7 +2,7 @@
 SERIAL_KEY_ALIASES = {'название' => :title, 'описание' => :description, 'количество сезонов' => :count_seasons}
 
 Given /^есть (\d+) разных сериалов$/ do |count_serials|
-  count_serials.to_i.times { SerialRepoFactory.create }
+  count_serials.to_i.times { RepositoryFactory(:serial) }
 
   Repository.index!
 end
@@ -12,7 +12,7 @@ Then /^я должен увидеть список из (\d+) сериалов$/
 end
 
 Given /^есть сериал "([^\"]*)"$/ do |serial_title|
-  SerialRepoFactory.create(:title => serial_title)
+  RepositoryFactory(:serial, :title => serial_title)
   
   Repository.index!
 end
@@ -29,7 +29,7 @@ Given /^есть (?:следующие|такие) сериалы:$/ do |serials
       attrs[SERIAL_KEY_ALIASES[key]] = value
     end
 
-    SerialRepoFactory.create(attrs)
+    RepositoryFactory(:serial, attrs)
   end
 
   Repository.index!
@@ -76,10 +76,13 @@ Given /^есть такой сериал:$/ do |table|
     attrs[:count_seasons] = 0
   end
 
-  serial_path = SerialRepoFactory.create(attrs)
+  serial_path = RepositoryFactory(:serial, attrs)
 
   seasons.each_with_index do |count_episodes, season_index|
-    SeasonRepoFactory.create(serial_path, season_index, count_episodes)
+    RepositoryFactory(:season,
+                      :serial_repo_path => serial_path,
+                      :index => season_index,
+                      :count_episodes => count_episodes)
   end
   
   Repository.index!

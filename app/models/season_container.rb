@@ -1,29 +1,36 @@
-class SeasonContainer
-  include ActiveModel::Validations
+class SeasonContainer < RepositoryContainer::Base
+  attributes :index
 
-  validates_presence_of :meta
+  def initialize(attrs)
+    @path = attrs.delete(:path)
 
-  class << self
-    def build(season_path, index)
-      meta = SeasonMeta.build(season_path, index)
-      episodes = []
-
-      Dir[File.join(season_path, '*')].sort.each_with_index do |f, episode_index|
-        episodes << EpisodeContainer.build((episode_index+1))
-      end
-
-      self.new(:meta => meta, :episodes => episodes)
-    end
+    super(attrs)
   end
 
-  attr_reader :meta, :episodes
-  
-  def initialize(attrs)
-    self.meta = attrs[:meta]
-    self.episodes = attrs[:episodes] || []
+  def episodes
+    return @episodes if defined?(@episodes)
+
+    @episodes = []
+    
+    mp4s_episodes = read_episodes('mp4')
+    webm_episodes = read_episodes('webm')
+
+    mp4s_episodes.each_with_index do |mp4, index|
+      attrs = {
+        :mp4 => mp4,
+        :webm => webm_episodes[index],
+        :index => (index+1)
+      }
+
+      @episodes << EpisodeContainer.new(attrs)
+    end
+
+    @episodes
   end
 
   protected
 
-  attr_writer :meta, :episodes
+  def read_episodes(ext)
+    Dir[File.join(@path, "*.#{ext}")].sort
+  end
 end

@@ -1,50 +1,32 @@
 require 'spec_helper'
 
 describe Repository, '#index!' do
-  context "when repository directory is not empty" do
-    before do
-      @paths = []
-      @containers = []
-      
-      3.times do
-        container = Object.new
-        path = SerialRepoFactory.create
+  before do
+    @serial_containers = []
+    @paths = []
 
-        SerialContainer.stubs(:build).with(path).returns(container)
-        
-        @containers << container
-        @paths << path
-      end
+    3.times do
+      path = RepositoryFactory(:serial)
 
-      Serial.stubs(:rebuild)
-    end
-
-    it "should destroy all Serials" do
-      Serial.stubs(:destroy_all).once
-
-      Repository.index!
-    end
-    
-    it "should build container" do
-      @paths.each do |path|
-        SerialContainer.stubs(:build).with(path).once
-      end
-
-      Repository.index!
-    end
-
-    it "should rebuild Serial" do
-      @containers.each do |container|
-        Serial.stubs(:rebuild).with(container).once
-      end
-
-      Repository.index!
+      @serial_containers << ContainerFactory(:serial, path)
+      @paths << path
     end
   end
 
-  context "when repository directory is empty" do
-    it "should not change any Serial" do
-      lambda { Repository.index! }.should_not change(Serial, :count)
+  it "should destroy all Serials" do
+    Serial.stubs(:destroy_all).once
+
+    Repository.index!
+  end
+
+  it "should import Serials" do
+    @serial_containers.each_with_index do |serial_container, index|
+      path = @paths[index]
+      
+      SerialContainer.stubs(:new).with(path).returns(serial_container).once
+      Serial.stubs(:import!).with(serial_container).once
     end
+
+    Repository.index!
   end
 end

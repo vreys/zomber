@@ -5,6 +5,8 @@ describe Serial do
   it { should validate_presence_of(:slug) }
   it { should validate_presence_of(:description) }
   it { should have_many(:seasons, :dependent => :destroy) }
+  
+  # not working! WTF?
   #  it { should have_default_scope(:order => 'title ASC')}
 
   it { should have_attached_file(:poster) }
@@ -14,45 +16,34 @@ describe Serial do
   it { should validate_attachment_presence(:thumbnail) }
 
   describe "#to_param" do
-    before do
-      @serial = Factory(:serial)
-    end
+    subject { Factory(:serial) }
 
     it "should return slug attribute" do
-      @serial.to_param.should eql(@serial.slug)
+      subject.to_param.should eql(subject.slug)
     end
   end
 
-  describe "#rebuild" do
+  describe "#import!" do
     before do
-      @container = SerialContainerFactory.create
+      @serial_container = ContainerFactory(:serial)
     end
 
-    it "should create new Serial" do
-      lambda { Serial.rebuild(@container) }.should change(Serial, :count).from(0).to(1)
-    end
+    it "should create Serial with proper attributes" do
+      lambda { Serial.import!(@serial_container) }.should change(Serial, :count).from(0).to(1)
 
-    it "should assign attributes to just created Serial according to the meta" do
-      Serial.rebuild(@container)
-
-      serial = Serial.first
-
-      serial.title.should eql(@container.meta.title)
-      serial.slug.should eql(@container.meta.slug)
-      serial.description.should eql(@container.meta.description)
-    end
-
-    it "should rebuild seasons" do
-      serial = Object.new
-      serial.stubs(:id).returns(1)
+      @serial = Serial.first
       
-      Serial.stubs(:create!).returns(serial)
-      
-      @container.seasons.each do |season_container|
-        Season.stubs(:rebuild).with(season_container, serial.id).once
+      @serial_container.attributes.each do |key, value|
+        @serial[key] = value
+      end
+    end
+
+    it "should import seasons" do
+      @serial_container.seasons.each do |season_container|
+        Season.stubs(:import!).with(season_container).once
       end
 
-      Serial.rebuild(@container)
+      Serial.import!(@serial_container)
     end
   end
 end

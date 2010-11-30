@@ -3,10 +3,12 @@ class Episode < ActiveRecord::Base
 
   validates_presence_of :index
   validates_presence_of :season_id
+  validates_presence_of :mp4
+  validates_presence_of :webm
   
   class << self
-    def rebuild(container, season_id)
-      Episode.create!(:season_id => season_id, :index => container.meta.index)
+    def import!(container)
+      create!(container.attributes)
     end
   end
 end

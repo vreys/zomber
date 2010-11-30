@@ -1,76 +1,70 @@
+# -*- coding: utf-8 -*-
 require 'spec_helper'
 
 describe SerialContainer do
-  describe "#build" do
-    context "when calling with path to an existant serial directory" do
+  context "after method new is called with path to serial repository" do
+    before do
+      attrs = {
+        :title       => 'Доктор Хаус',
+        :description => 'Сериал про мудака',
+        :slug        => 'house'
+      }
+
+      @repo_path = RepositoryFactory(:serial, attrs)
+      @expected_attributes = attrs
+      @serial_container = SerialContainer.new(@repo_path)
+    end
+
+    it "should properly read meta into attributes" do
+      @serial_container.attributes.should eql(@expected_attributes)
+    end
+
+    describe "poster" do
+      subject { @serial_container.poster }
+      
+      it { should be_a(File) }
+      
+      it "should have proper path" do
+        subject.path.should eql(@repo_path + '/poster.jpg')
+      end
+    end
+
+    describe "thumbnail" do
+      subject { @serial_container.thumbnail }
+      
+      it { should be_a(File) }
+      
+      it "should have proper path" do
+        subject.path.should eql(@repo_path + '/thumbnail.jpg')
+      end
+    end
+
+    describe "seasons" do
       before do
-        @count_seasons = 5
-        @path = SerialRepoFactory.create(:count_seasons => @count_seasons)
-      end
+        @season_paths = []
 
-      it "should build serial meta" do
-        SerialMeta.stubs(:build).with(@path).once
-
-        SerialContainer.build(@path)
-      end
-
-      it "should build season containers" do
-        (1..@count_seasons).to_a.each do |index|
-          SeasonContainer.stubs(:build).with(File.join(@path, "season #{index}").to_s, index).once
-        end
-
-        SerialContainer.build(@path)
-      end
-
-      it "should create new container instance" do
-        meta = Object.new
-        SerialMeta.stubs(:build).returns(meta)
-
-        seasons = []
-        (1..@count_seasons).to_a.each do |index|
-          season = Object.new
-          SeasonContainer.stubs(:build).with(File.join(@path, "season #{index}").to_s, index).returns(season)
-
-          seasons << season
-        end
+        serial_repo_path = RepositoryFactory(:serial, :count_seasons => 0)
         
-        SerialContainer.stubs(:new).with(:meta => meta, :seasons => seasons).once
-        SerialContainer.build(@path)
+        5.times.to_a.each do |index|
+          @season_paths << RepositoryFactory(:season,
+                                             :serial_repo_path => serial_repo_path,
+                                             :index => (index+1))
+        end
+
+        @serial_container = SerialContainer.new(serial_repo_path)
       end
 
-      it "should return serial container" do
-        result = SerialContainer.build(@path)
-        result.should be_an_instance_of(SerialContainer)
-      end
-    end
+      it "should create SeasonContainer for each directory in serial path" do
+        @season_paths.each_with_index do |path, index|
+          SeasonContainer.stubs(:new).with(:path => path, :index => (index+1)).once
+        end
 
-    context "when calling with path to a not existant serial directory" do
-      before do
-        @path = Rails.root.join('tmp', 'path', 'that', 'do', 'not', 'exists').to_s
+        @serial_container.seasons
       end
 
-      it "should return nil" do
-        result = SerialContainer.build(@path)
-        result.should be_nil
+      it "should return array of SeasonContainers" do
+        @serial_container.seasons.map{|s| s.class}.uniq.should eql([SeasonContainer])
       end
-    end
-  end
-
-  describe "validations" do
-    subject { SerialContainerFactory.create }
-
-    it { should validate_presence_of(:meta) }
-  end
-
-  describe "a new instance" do
-    subject { SerialContainerFactory.create }
-
-    it "should have seasons" do
-      subject.seasons.should be_an_instance_of(Array)
-    end
-
-    it "should have meta" do
-      subject.meta.should be_an_instance_of(SerialMeta)
     end
   end
 end

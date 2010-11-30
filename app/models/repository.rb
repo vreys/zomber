@@ -3,9 +3,10 @@ class Repository
     def index!
       Serial.destroy_all
       
-      Dir[Rails.root.join(REPOS_PATH, '**')].each do |dir|
-        container = SerialContainer.build(dir)
-        Serial.rebuild(container)
+      Dir[Rails.root.join(REPOS_PATH, '*')].each do |dir|
+        container = SerialContainer.new(dir)
+        
+        Serial.import!(container)
       end
     end
   end

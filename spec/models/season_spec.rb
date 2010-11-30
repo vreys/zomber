@@ -11,35 +11,24 @@ describe Season do
     it { should have_many(:episodes, :dependent => :destroy) }
   end
 
-  describe "#rebuild" do
+  describe "#import" do
     before do
-      @index = 5
+      @season_container = ContainerFactory(:season)
       @serial = Factory(:serial)
-      @count_episodes = 3
-      @container = SeasonContainerFactory.create(nil, @index, @count_episodes)
     end
 
-    it "should create new Season" do
-      lambda { Season.rebuild(@container, @serial.id) }.should change(@serial.seasons, :count).from(0).to(1)
+    it "should create Season with proper attributes" do
+      lambda { @serial.seasons.import!(@season_container) }.should change(@serial.seasons, :count).from(0).to(1)
+
+      @serial.seasons.first.index.should eql(@season_container.attributes[:index])
     end
 
-    it "should rebuild Episodes" do
-      season = Object.new
-      season.stubs(:id).returns(99)
-
-      Season.stubs(:create!).returns(season)
-
-      @container.episodes.each do |episode_container|
-        Episode.stubs(:rebuild).with(episode_container, season.id).once
+    it "should import Episodes" do
+      @season_container.episodes.each do |episode_container|
+        Episode.stubs(:import!).with(episode_container).once
       end
 
-      Season.rebuild(@container, @serial.id)
-    end
-
-    it "should assign valid index to just created Season" do
-      Season.rebuild(@container, @serial.id)
-
-      Season.first.index.should eql(@index)
+      @serial.seasons.import!(@season_container)
     end
   end
 end

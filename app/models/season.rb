@@ -3,14 +3,12 @@ class Season < ActiveRecord::Base
   has_many :episodes, :dependent => :destroy
   
   class << self
-    def rebuild(container, serial_id)
-      season = Season.create!(:serial_id => serial_id, :index => container.meta.index)
+    def import!(container)
+      season = create!(container.attributes)
 
-      container.episodes.each do |episode|
-        Episode.rebuild(episode, season.id)
+      container.episodes.each do |episode_container|
+        season.episodes.import!(episode_container)
       end
-      
-      season
     end
   end
 
