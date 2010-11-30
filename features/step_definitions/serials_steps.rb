@@ -42,7 +42,9 @@ Then /^я должен увидеть список сериалов в тако�
 end
 
 Then /^я должен увидеть (\d+) иконок$/ do |count_icons|
-  all('img.thumb[src^="/images/thumbnails"]').length.should eql(count_icons.to_i)
+  all(:xpath, "//ul[@id='serials_list']/li/img").map do |img|
+    img['src'].should match(/^\/images\/thumbnails\/(?:\d+)\/thumbnail_default\.jpg/)
+  end.length.should eql(count_icons.to_i)
 end
 
 When /^я захожу на страницу сериала "([^\"]*)"$/ do |serial_title|
@@ -51,7 +53,7 @@ When /^я захожу на страницу сериала "([^\"]*)"$/ do |ser
 end
 
 Then /^я должен увидеть постер$/ do
-  page.should have_css('#poster.serial[src^="/images/posters"]')
+  find(:xpath, "//img[@id='poster']")['src'].should match(/^\/images\/posters\/(?:\d+)\/poster_default\.jpg/)
 end
 
 Then /^я должен увидеть список серий для (\d+) (?:сезонов|сезона)$/ do |count_seasons|

@@ -3,11 +3,13 @@ class Serial < ActiveRecord::Base
   
   has_attached_file :poster, :styles => { :default => "980x1024"},
   :path => File.join(POSTERS_PATH, ':id', ':basename_:style.:extension').to_s,
-  :url => File.join(POSTERS_URL_PATH, ':id', ':basename_:style.:extension').to_s
+  :url => File.join(POSTERS_URL_PATH, ':id', ':basename_:style.:extension').to_s,
+  :default_style => :default
 
   has_attached_file :thumbnail, :styles => { :default => "120x120" },
   :path => File.join(THUMBNAILS_PATH, ':id', ':basename_:style.:extension').to_s,
-  :url => File.join(THUMBNAILS_URL_PATH, ':id', ':basename_:style.:extension').to_s
+  :url => File.join(THUMBNAILS_URL_PATH, ':id', ':basename_:style.:extension').to_s,
+  :default_style => :default
   
   validates_presence_of :title
   validates_presence_of :slug
