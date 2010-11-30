@@ -4,3 +4,11 @@
 <div id="player">
   <%= video_tag([@episode.mp4, @episode.webm]) %>
 </div>
+
+<% unless @episode.first? %>
+  <%= link_to("Предыдущий эпизод", serial_episode_path(:episode_index => @episode.previous.index)) %>
+<% end %>
+
+<% unless @episode.last? %>
+  <%= link_to("Следующий эпизод", serial_episode_path(:episode_index => @episode.next.index)) %>
+<% end %>

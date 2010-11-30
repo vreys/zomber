@@ -11,4 +11,20 @@ class Episode < ActiveRecord::Base
       create!(container.attributes)
     end
   end
+
+  def first?
+    (self.index == 1)
+  end
+
+  def last?
+    (self.index == self.season.episodes.count)
+  end
+
+  def previous
+    self.season.episodes.where(:index => (self.index-1)).first unless self.first?
+  end
+
+  def next
+    self.season.episodes.where(:index => (self.index+1)).first unless self.last?
+  end
 end

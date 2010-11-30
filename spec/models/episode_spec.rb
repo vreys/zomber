@@ -31,4 +31,90 @@ describe Episode do
       @season.episodes.first.index.should eql(@episode_container.attributes[:index])
     end
   end
+
+  describe "#first?" do
+    before do
+      @season = Factory(:season)
+
+      (1..2).to_a.each do |index|
+        Factory(:episode, :index => index, :season => @season)
+      end
+    end
+
+    context "when this is not first episode in season" do
+      subject { @season.episodes.last.first? }
+      
+      it { should be(false)}
+    end
+
+    context "when this is first episode in season" do
+      subject { @season.episodes.first.first? }
+      
+      it { should be(true)}
+    end
+  end
+
+  describe "#last?" do
+    before do
+      @season = Factory(:season)
+
+      (1..2).to_a.each do |index|
+        Factory(:episode, :index => index, :season => @season)
+      end
+    end
+
+    context "when this is not last episode in season" do
+      subject { @season.episodes.first.last? }
+      
+      it { should be(false) }
+    end
+    
+    context "when this is last episode in season" do
+      subject { @season.episodes.last.last? }
+
+      it { should be(true) }
+    end
+  end
+
+  describe "#previous" do
+    before do
+      @season = Factory(:season)
+
+      (1..2).to_a.each do |index|
+        Factory(:episode, :index => index, :season => @season)
+      end
+    end
+
+    context "when this is not first episode in season" do
+      it "should return previous episode" do
+        @season.episodes.last.previous.should eql(@season.episodes.first)
+      end
+    end
+
+    context "when this is first episode in season" do
+      subject { @season.episodes.first.previous }
+      it { should be_nil }
+    end
+  end
+
+  describe "#next" do
+    before do
+      @season = Factory(:season)
+
+      (1..2).to_a.each do |index|
+        Factory(:episode, :index => index, :season => @season)
+      end
+    end
+
+    context "when this is not last episode in season" do
+      it "should return next episode" do
+        @season.episodes.first.next.should eql(@season.episodes.last)
+      end
+    end
+
+    context "when this is last episode in season" do
+      subject { @season.episodes.last.next }
+      it { should be_nil }
+    end
+  end
 end

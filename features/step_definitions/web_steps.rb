@@ -25,12 +25,16 @@ Then /^я хочу увидеть результат$/ do
   save_and_open_page
 end
 
-When /^я иду по ссылке "([^\"]*)"$/ do |link|
+When /^я (?:иду|прохожу) по ссылке "([^\"]*)"$/ do |link|
   click_link(link)
 end
 
 Then /^я должен увидеть "([^\"]*)"$/ do |text|
   page.should have_content(text)
+end
+
+Then /^я не должен увидеть "([^\"]*)"$/ do |text|
+  page.should_not have_content(text)
 end
 
 # Given /^(?:|I )am on (.+)$/ do |page_name|

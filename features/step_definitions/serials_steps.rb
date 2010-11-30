@@ -121,3 +121,10 @@ Then /^я должен увидеть проигрыватель$/ do
 
   sources.should include('mp4', 'webm')
 end
+
+Then /^я должен быть на странице (\d+) эпизода в (\d+) сезоне сериала "([^\"]*)"$/ do |episode_index, season_index, serial_title|
+  Then %Q{я должен увидеть "#{serial_title}"}
+  Then %Q{я должен увидеть "#{episode_index} эпизод"}
+  Then %Q{я должен увидеть "#{season_index} сезон"}
+  Then %Q{я должен увидеть проигрыватель}
+end
