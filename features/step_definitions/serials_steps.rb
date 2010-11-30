@@ -101,12 +101,23 @@ Then /^я должен увидеть такой список сезонов:$/ 
   end
 end
 
-When /^я перехожу по ссылке "([^\"]*)" во (\d+) сезоне$/ do |episode, season_index|
+When /^я перехожу по ссылке "([^\"]*)" (?:во|в) (\d+) сезоне$/ do |episode, season_index|
   within(:xpath, "//div[@id='serial-seasons']/ul[#{season_index}]/li") do
     click_link(episode)
   end
 end
 
+When /^я захожу на страницу (\d+) эпизода (?:во|в) (\d+) сезоне сериала "([^\"]*)"$/ do |episode_index, season_index, serial_title|
+  When %Q{я захожу на страницу сериала "#{serial_title}"}
+  When %Q{я перехожу по ссылке "#{episode_index} эпизод" во #{season_index} сезоне}
+end
+
 Then /^я должен увидеть проигрыватель$/ do
-  page.should have_css('#player')
+  sources = []
+  
+  all(:xpath, "//video/source").each do |source|
+     sources << source['src'].match(/\.(mp4|webm)/i)[1]
+  end
+
+  sources.should include('mp4', 'webm')
 end

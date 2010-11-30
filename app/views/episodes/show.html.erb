@@ -1,4 +1,6 @@
 <h1><%= @serial.title %></h1>
 <h3><%= @season.index %> сезон, <%= @episode.index %> эпизод</h3>
 
-<div id="player"></div>
+<div id="player">
+  <%= video_tag([@episode.mp4, @episode.webm]) %>
+</div>
