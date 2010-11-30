@@ -12,6 +12,9 @@ module Hdtv
     config.paths.thumbnails 'public/images/thumbnails', :load_path => false
     config.paths.repos 'media/repos', :load_path => false
 
+    # Custom directories with classes and modules you want to be autoloadable.
+    config.autoload_paths += %W(#{config.root}/lib)
+
     config.generators do |g|
       g.test_framework :rspec, :fixture => true, :views => false, :controllers => false
       g.fixture_replacement :factory_girl

@@ -42,7 +42,7 @@ RepositoryFactory.define(:season) do |*args|
   }
 
   attrs.merge!(args[0]) if args[0] && args[0].class == Hash
-  
+
   season_repo_path = File.join(attrs[:serial_repo_path], "season_#{attrs[:index]}").to_s
 
   FileUtils.makedirs(season_repo_path)
