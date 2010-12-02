@@ -37,6 +37,14 @@ Then /^я не должен увидеть "([^\"]*)"$/ do |text|
   page.should_not have_content(text)
 end
 
+Then /^я не должен увидеть ссылку "([^\"]*)"$/ do |text|
+  page.should have_no_xpath('//a', :text => text)
+end
+
+Then /^я должен увидеть ссылку "([^\"]*)"$/ do |text|
+  page.should have_xpath('//a', :text => text)
+end
+
 # Given /^(?:|I )am on (.+)$/ do |page_name|
 #   visit path_to(page_name)
 # end

@@ -1,14 +1,86 @@
-<h1><%= @serial.title %></h1>
-<h3><%= @season.index %> сезон, <%= @episode.index %> эпизод</h3>
+<% content_for(:menu) do %>
+  <a href="<%= serial_path(@serial) %>">Страница сериала "<%= @serial.title %>"</a> | <a href="<%= root_path %>">Список всех сериалов</a>
+<% end %>
+<div id="episode" class="row">
+  <script src="/video-js-2.0.1/video.js" type="text/javascript" charset="utf-8"></script>
 
-<div id="player">
-  <%= video_tag([@episode.mp4, @episode.webm]) %>
+  <script type="text/javascript">
+    // Must come after the video.js library
+
+    // Add VideoJS to all video tags on the page when the DOM is ready
+    VideoJS.setupAllWhenReady();
+
+    /* ============= OR ============ */
+
+    // Setup and store a reference to the player(s).
+    // Must happen after the DOM is loaded
+    // You can use any library's DOM Ready method instead of VideoJS.DOMReady
+
+    /*
+    VideoJS.DOMReady(function(){
+    
+    // Using the video's ID or element
+    var myPlayer = VideoJS.setup("player");
+    
+    // OR using an array of video elements/IDs
+    // Note: It returns an array of players
+
+    // After you have references to your players you can...(example)
+    #myPlayer.play(); // Starts playing the video for this player.
+    });
+    */
+
+    /* ========= SETTING OPTIONS ========= */
+
+    // Set options when setting up the videos. The defaults are shown here.
+
+    /*
+    VideoJS.setupAllWhenReady({
+    controlsBelow: false, // Display control bar below video instead of in front of
+    controlsHiding: true, // Hide controls when mouse is not over the video
+    defaultVolume: 0.85, // Will be overridden by user's last volume if available
+    flashVersion: 9, // Required flash version for fallback
+    linksHiding: true // Hide download links when video is supported
+    });
+    */
+
+    // Or as the second option of VideoJS.setup
+    
+    /*
+    VideoJS.DOMReady(function(){
+    var myPlayer = VideoJS.setup("player", {
+    // Same options
+    });
+    });
+    */
+
+  </script>
+
+  <!-- Include the VideoJS Stylesheet -->
+  <link rel="stylesheet" href="/video-js-2.0.1/video-js.css" type="text/css" media="screen" title="Video JS"/>
+
+  <h1><%= @serial.title %></h1>
+  <h3><%= @season.index %> сезон, <%= @episode.index %> эпизод</h3>
+
+  <div class="video-js-box">
+    <%= video_tag([@episode.mp4_path, @episode.webm_path], :id => 'player', :width => 640, :height => 480) %>
+  </div>
+
+  <div class="row nav">
+    <div class="sixcol">
+      <% unless @episode.first? %>
+        <%= link_to("← Предыдущий эпизод", serial_episode_path(:episode_index => @episode.previous.index)) %>
+      <% else %>
+        ← Предыдущий эпизод
+      <% end %>
+    </div>
+
+    <div class="sixcol last">
+      <% unless @episode.last? %>
+        <%= link_to("Следующий эпизод →", serial_episode_path(:episode_index => @episode.next.index)) %>
+      <% else %>
+        Слудущий эпизод →
+      <% end %>
+    </div>
+  </div>
 </div>
-
-<% unless @episode.first? %>
-  <%= link_to("Предыдущий эпизод", serial_episode_path(:episode_index => @episode.previous.index)) %>
-<% end %>
-
-<% unless @episode.last? %>
-  <%= link_to("Следующий эпизод", serial_episode_path(:episode_index => @episode.next.index)) %>
-<% end %>

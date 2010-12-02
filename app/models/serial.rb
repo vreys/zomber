@@ -1,12 +1,12 @@
 class Serial < ActiveRecord::Base
   has_many :seasons, :dependent => :destroy
   
-  has_attached_file :poster, :styles => { :default => "980x1024"},
+  has_attached_file :poster, :styles => { :default => "1140>x1024"},
   :path => File.join(POSTERS_PATH, ':id', ':basename_:style.:extension').to_s,
   :url => File.join(POSTERS_URL_PATH, ':id', ':basename_:style.:extension').to_s,
   :default_style => :default
 
-  has_attached_file :thumbnail, :styles => { :default => "120x120" },
+  has_attached_file :thumbnail, :styles => { :default => "240x180" },
   :path => File.join(THUMBNAILS_PATH, ':id', ':basename_:style.:extension').to_s,
   :url => File.join(THUMBNAILS_URL_PATH, ':id', ':basename_:style.:extension').to_s,
   :default_style => :default

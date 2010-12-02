@@ -1,8 +1,14 @@
-<ul id="serials_list">
-  <% Serial.all.each do |serial| %>
-    <li>
-      <%= image_tag(serial.thumbnail.url, :class => 'thumb') %>
-      <%= link_to(serial.title, serial_path(serial)) %>
-    </li>
+<div id="serials_grid">
+  <% Serial.all.in_groups_of(4, false) do |group| %>
+    <ul class="row">
+      <% group.each_with_index do |serial, col_index| %>
+        <li class="threecol <%= 'last' if (col_index+1) == group.length %>">
+          <a href="<%= serial_path(serial) %>">
+            <%= image_tag(serial.thumbnail.url, :class => 'thumb') %>
+            <strong><%= serial.title %></strong>
+          </a>
+        </li>
+      <% end %>
+    </ul>
   <% end %>
-</ul>
+</div>

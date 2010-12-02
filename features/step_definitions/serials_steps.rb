@@ -8,7 +8,7 @@ Given /^есть (\d+) разных сериалов$/ do |count_serials|
 end
 
 Then /^я должен увидеть список из (\d+) сериалов$/ do |count_serials|
-  all('#serials_list li').count.should eql(count_serials.to_i)
+  all('#serials_grid li').count.should eql(count_serials.to_i)
 end
 
 Given /^есть сериал "([^\"]*)"$/ do |serial_title|
@@ -18,7 +18,7 @@ Given /^есть сериал "([^\"]*)"$/ do |serial_title|
 end
 
 Then /^я не должен увидеть список сериалов$/ do
-  page.should have_no_css('#serials_list')
+  page.should have_no_css('#serials_grid')
 end
 
 Given /^есть (?:следующие|такие) сериалы:$/ do |serials|
@@ -36,13 +36,17 @@ Given /^есть (?:следующие|такие) сериалы:$/ do |serials
 end
 
 Then /^я должен увидеть список сериалов в таком порядке:$/ do |serials_table|
-  serials_table.raw.each_with_index do |opts, index|
-    find(:xpath, "//ul[@id='serials_list']/li[#{(index+1)}]/a").text.should eql(opts[0])
+  list = []
+  
+  all(:xpath, "//div[@id='serials_grid']/ul/li/a/strong").each do |el|
+     list << el.text.strip
   end
+  
+  serials_table.raw.to_a.flatten.should eql(list)
 end
 
 Then /^я должен увидеть (\d+) иконок$/ do |count_icons|
-  all(:xpath, "//ul[@id='serials_list']/li/img").map do |img|
+  all(:xpath, "//div[@id='serials_grid']/ul/li/a/img").map do |img|
     img['src'].should match(/^\/images\/thumbnails\/(?:\d+)\/thumbnail_default\.jpg/)
   end.length.should eql(count_icons.to_i)
 end
@@ -53,7 +57,7 @@ When /^я захожу на страницу сериала "([^\"]*)"$/ do |ser
 end
 
 Then /^я должен увидеть постер$/ do
-  find(:xpath, "//img[@id='poster']")['src'].should match(/^\/images\/posters\/(?:\d+)\/poster_default\.jpg/)
+  find(:xpath, "//div[@id='serial_seasons']")['style'].should match(/\/images\/posters\/(?:\d+)\/poster_default\.jpg/)
 end
 
 Then /^я должен увидеть список серий для (\d+) (?:сезонов|сезона)$/ do |count_seasons|
@@ -104,7 +108,20 @@ Then /^я должен увидеть такой список сезонов:$/ 
 end
 
 When /^я перехожу по ссылке "([^\"]*)" (?:во|в) (\d+) сезоне$/ do |episode, season_index|
-  within(:xpath, "//div[@id='serial-seasons']/ul[#{season_index}]/li") do
+  season_index = season_index.to_i
+
+  row = 1
+  col = 1
+
+  if season_index%3 > 0
+    col = season_index%3
+    row = (season_index-col)/3
+    row = 1 if row < 1
+  else
+    row = season_index/3
+  end
+  
+  within(:xpath, "//div[@id='serial_seasons']/div[#{row}]/ul[#{col}]/li") do
     click_link(episode)
   end
 end

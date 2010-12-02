@@ -27,4 +27,12 @@ class Episode < ActiveRecord::Base
   def next
     self.season.episodes.where(:index => (self.index+1)).first unless self.last?
   end
+
+  def mp4_path
+    mp4.gsub(Rails.root.join('media').to_s, '')
+  end
+
+  def webm_path
+    webm.gsub(Rails.root.join('media').to_s, '')
+  end
 end

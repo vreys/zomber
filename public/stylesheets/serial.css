@@ -1,0 +1,133 @@
+#serials_grid {
+   list-style: none;
+}
+
+#serials_grid li {
+   list-style: none;
+   text-align: center;
+   margin-bottom: 40px;
+}
+
+#serials_grid li a {
+   border: 0px;
+   outline: none;
+}
+
+#serials_grid li a img {
+   opacity: 0.9;
+   border-radius: 8px;
+   -moz-border-radius: 8px;
+   -webkit-border-radius: 8px;
+   margin: 0px auto;
+}
+
+#serials_grid li a:hover img {
+   opacity: 1;
+}
+
+#serials_grid li a strong {
+   display: block;
+   text-align: center;
+   font-weight: normal;
+   padding-top: 5px;
+   font-size: 20px;
+}
+
+#serial_seasons {
+   background: #050505 none no-repeat;
+   padding: 40px;
+   overflow: hidden;
+}
+
+#serial_seasons p {
+   background-color: #f0f0f0;
+   opacity: 0.8;
+   font-size: 16px;
+   border-radius: 8px;
+   -moz-border-radius: 8px;
+   -webkit-border-radius: 8px;
+   padding: 20px;
+   margin: 0px 0px 20px;
+}
+
+#serial_seasons h1 {
+   background-color: maroon;
+   opacity: 0.8;
+   font-size: 48px;
+   font-weight: none;
+   color: #fff;
+   float: left;
+   border-radius: 8px;
+   -moz-border-radius: 8px;
+   -webkit-border-radius: 8px;
+   padding: 20px;
+   margin-bottom: 40px;
+}
+
+#serial_seasons .row {
+   margin-bottom: 20px;
+}
+
+#serial_seasons ul li {
+   list-style: none;
+}
+
+#serial_seasons ul li h2 {
+   font-size: 36px;
+   float: left;
+   padding: 20px;
+   background: #000;
+   opacity: 0.8;
+   color: #fff;
+   border-radius: 8px;
+   -moz-border-radius: 8px;
+   -webkit-border-radius: 8px;
+}
+
+#serial_seasons ul li br {
+   clear: both;
+}
+
+#serial_seasons ul li .episodes {
+   float: left;
+   display: block;
+   overflow: hidden;
+   background: #f0f0f0;
+   opacity: 0.8;
+   padding: 20px;
+   border-radius: 8px;
+   -moz-border-radius: 8px;
+   -webkit-border-radius: 8px;
+}
+
+#serial_seasons ul li .episodes li {
+   line-height: 2em;
+}
+
+#serial_seasons ul li .episodes li a {
+   font-size: 22px;
+   font-weight: normal;
+   text-decoration: none;
+   border: 0px;
+}
+
+#serial_seasons ul li .episodes li a:hover {
+   text-decoration: underline;
+}
+
+#player {
+   margin: 0 auto;
+}
+
+#episode .nav .sixcol {
+   font-size: 18px;
+   color: #ccc;
+}
+
+#episode .nav .sixcol a {
+   font-weight: normal;
+}
+
+#episode .nav .sixcol.last {
+   text-align: right;
+}

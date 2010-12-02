@@ -1,23 +1,33 @@
-<h1><%= @serial.title %></h1>
+<% content_for(:menu) do %>
+  <a href="<%= root_path %>">Список всех сериалов</a>
+<% end %>
+<div class="row">
+  <div id="serial_seasons" style="background-image: url('<%=  @serial.poster.url%>');">
+    <p><%= @serial.description %></p>
 
-<p><%= @serial.description %></p>
+    <h1><%= @serial.title %></h1>
 
-<img id="poster" src="<%= @serial.poster.url %>" class="serial"/>
-
-<div id="serial-seasons">
-  <% @serial.seasons.each do |season| %>
-    <ul>
-      <li class="season">
-        <h2><%= season.index %> сезон</h2>
-
-        <ul class="episodes">
-          <% season.episodes.each do |episode| %>
-            <li>
-              <%= link_to("#{episode.index} эпизод", serial_episode_path(:serial_id => @serial.slug, :season_index => season.index, :episode_index => episode.index)) %>
+    <% @serial.seasons.all.in_groups_of(3, false).each do |group| %>
+      <div class="row">
+        <% group.each_with_index do |season, index| %>
+          <ul class="fourcol <%= 'last' if (index+1) == group.length %>">
+            <li class="season">
+              <h2><%= season.index %> сезон</h2>
+              <br/>
+              <ul class="episodes">
+                <% season.episodes.each do |episode| %>
+                  <li>
+                    <%= link_to("#{episode.index} эпизод", 
+                                serial_episode_path(:serial_id => @serial.slug, 
+                                                    :season_index => season.index, 
+                                                    :episode_index => episode.index)) %>
+                  </li>
+                <% end %>
+              </ul>
             </li>
-          <% end %>
-        </ul>
-      </li>
-    </ul>
-  <% end %>
+          </ul>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>

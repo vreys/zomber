@@ -1,15 +1,44 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Hdtv</title>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
-  <%= csrf_meta_tag %>
-</head>
-<body>
+<!doctype html>
+<html lang="en">
 
-<%= yield %>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Zomber.tv</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-</body>
+    <!-- The 1140px Grid -->
+    <link rel="stylesheet" href="/stylesheets/1140.css" type="text/css" media="screen" />
+    
+    <!-- Type and image presets - NOT ESSENTIAL -->
+    <link rel="stylesheet" href="/stylesheets/typeimg.css" type="text/css" media="screen" />
+    <!-- Make minor type adjustments for 1024 monitors -->
+    <link rel="stylesheet" href="/stylesheets/smallerscreen.css" media="only screen and (max-width: 1023px)" />
+    <!-- Resets grid for mobile -->
+    <link rel="stylesheet" href="/stylesheets/mobile.css" media="handheld, only screen and (max-width: 767px)" />
+    <!-- Put your layout here -->
+    <link rel="stylesheet" href="/stylesheets/layout.css" type="text/css" media="screen" />
+
+    <%= stylesheet_link_tag 'serial' %>
+    <%= csrf_meta_tag %>
+  </head>
+
+  <body>
+    <div class="container">
+      <div id="header" class="row">
+        <div class="sixcol">
+          <a href="<%= root_path %>">
+            <%= image_tag 'zombie.jpg' %>
+            <%= image_tag 'zomber.png' %>
+          </a>
+        </div>
+
+        <div class="sixcol last">
+          <div id="menu">
+            <%= yield :menu %>
+          </div>
+        </div>
+      </div>
+      <%= yield %>
+    </div>
+  </body>
 </html>
