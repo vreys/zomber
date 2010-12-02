@@ -35,15 +35,16 @@ class SerialContainer < RepositoryContainer::Base
 
   def attrs_from_meta_file
     meta_file_name = File.basename(@path)
+    slug = meta_file_name.gsub('.txt', '')
 
     f = File.new(File.join(@path, meta_file_name + '.txt'), 'r')
-    lines = f.readlines.map{|l| l.strip}
+    meta = f.read.split("\n\n").map{|l| l.strip}
     f.close
 
     {
-      :title => lines[0],
-      :slug => lines[1],
-      :description => lines[2]
+      :title => meta[0],
+      :slug => slug,
+      :description => meta[1]
     }
   end
 end

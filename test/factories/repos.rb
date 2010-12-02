@@ -10,7 +10,7 @@ RepositoryFactory.define(:serial) do |*args|
 
   attrs.merge!(args[0]) if args[0] && args[0].class == Hash
 
-  serial_repo_name = Faker::Lorem.words(rand(5)+1).join('_')
+  serial_repo_name = attrs[:slug]
 
   serial_repo_path = Rails.root.join(REPOS_PATH, serial_repo_name)
   serial_meta_path = serial_repo_path.join("#{serial_repo_name}.txt")
@@ -24,7 +24,7 @@ RepositoryFactory.define(:serial) do |*args|
   FileUtils.cp(attrs[:thumbnail], serial_thumb_path)
 
   meta = File.new(serial_meta_path, 'w')
-  meta.puts(attrs[:title], attrs[:slug], attrs[:description])
+  meta.puts(attrs[:title], '', attrs[:description])
   meta.close
 
   attrs[:count_seasons].times.to_a.each do |index|
