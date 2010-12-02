@@ -115,8 +115,8 @@
    text-decoration: underline;
 }
 
-#player {
-   margin: 0 auto 20px;
+.video-js-box {
+   margin: 0 auto 20px!important;
 }
 
 #episode .nav .sixcol {

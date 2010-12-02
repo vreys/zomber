@@ -5,64 +5,20 @@
   <script src="/video-js-2.0.1/video.js" type="text/javascript" charset="utf-8"></script>
 
   <script type="text/javascript">
-    // Must come after the video.js library
-
-    // Add VideoJS to all video tags on the page when the DOM is ready
-    //VideoJS.setupAllWhenReady();
-
-    /* ============= OR ============ */
-
-    // Setup and store a reference to the player(s).
-    // Must happen after the DOM is loaded
-    // You can use any library's DOM Ready method instead of VideoJS.DOMReady
-
-    VideoJS.DOMReady(function(){
-    var myPlayer = VideoJS.setup("player");
-    controlsBelow: true, // Display control bar below video instead of in front of
-    controlsHiding: true, // Hide controls when mouse is not over the video
-    defaultVolume: 0.85, // Will be overridden by user's last volume if available
-    flashVersion: 9, // Required flash version for fallback
-    linksHiding: true // Hide download links when video is supported
-    });
-
-    /* ========= SETTING OPTIONS ========= */
-
-    // Set options when setting up the videos. The defaults are shown here.
-
-    /*
-    VideoJS.setupAllWhenReady({
-    controlsBelow: false, // Display control bar below video instead of in front of
-    controlsHiding: true, // Hide controls when mouse is not over the video
-    defaultVolume: 0.85, // Will be overridden by user's last volume if available
-    flashVersion: 9, // Required flash version for fallback
-    linksHiding: true // Hide download links when video is supported
-    });
-    */
-
-    // Or as the second option of VideoJS.setup
-    
-    /*
-    VideoJS.DOMReady(function(){
-    var myPlayer = VideoJS.setup("player", {
-    // Same options
-    });
-    });
-    */
-
+    VideoJS.setupAllWhenReady();
   </script>
 
   <!-- Include the VideoJS Stylesheet -->
   <link rel="stylesheet" href="/video-js-2.0.1/video-js.css" type="text/css" media="screen" title="Video JS"/>
+  <link rel="stylesheet" href="/video-js-2.0.1/skins/vim.css" type="text/css" media="screen" title="Video JS"/>
 
   <h1><%= @serial.title %></h1>
   <h3><%= @season.index %> сезон, <%= @episode.index %> эпизод</h3>
 
-  <div class="video-js-box">
-    <%= video_tag([
-                   repository_path(:path => @episode.mp4_path), 
-                   repository_path(:path => @episode.webm_path)
-                  ], :id => 'player', :width => 700, :height => 400,
-                   :controls => 'controls', :class => 'video-js') %>
+  <div class="video-js-box vim-css">
+    <video id="player" class="video-js" width="700" height="400" controls="controls">
+      <source src="<%= repository_path(:path => @episode.mp4_path) %>" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
+      <source src="<%=repository_path(:path => @episode.webm_path) %>" type='video/webm; codecs="vp8, vorbis"' />
   </div>
 
   <div class="row nav">
