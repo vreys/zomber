@@ -6,6 +6,7 @@
           <a href="<%= serial_path(serial) %>">
             <%= image_tag(serial.thumbnail.url, :class => 'thumb') %>
             <strong><%= serial.title %></strong>
+            <em><%= serial.alt_title %></em>
           </a>
         </li>
       <% end %>

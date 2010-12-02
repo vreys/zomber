@@ -5,7 +5,8 @@ RepositoryFactory.define(:serial) do |*args|
     :description   => Faker::Lorem.words(rand(6)+5).join(' '),
     :poster        => Rails.root.join('test', 'factories', 'poster.jpg'),
     :thumbnail     => Rails.root.join('test', 'factories', 'thumbnail.jpg'),
-    :count_seasons => (rand(6) + 2)
+    :count_seasons => (rand(6) + 2),
+    :alt_title     => Faker::Lorem.words(rand(3)+1).join(' ')
   }
 
   attrs.merge!(args[0]) if args[0] && args[0].class == Hash
@@ -23,8 +24,11 @@ RepositoryFactory.define(:serial) do |*args|
   FileUtils.cp(attrs[:poster], serial_poster_path)
   FileUtils.cp(attrs[:thumbnail], serial_thumb_path)
 
+  full_title = attrs[:title]
+  full_title = "#{full_title} (#{attrs[:alt_title]})" unless attrs[:alt_title].blank?
+
   meta = File.new(serial_meta_path, 'w')
-  meta.puts(attrs[:title], '', attrs[:description])
+  meta.puts(full_title, '', attrs[:description])
   meta.close
 
   attrs[:count_seasons].times.to_a.each do |index|

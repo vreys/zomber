@@ -1,5 +1,5 @@
 class SerialContainer < RepositoryContainer::Base
-  attributes :title, :slug, :description
+  attributes :title, :alt_title, :slug, :description
 
   def initialize(path)
     @path = path
@@ -41,8 +41,17 @@ class SerialContainer < RepositoryContainer::Base
     meta = f.read.split("\n\n").map{|l| l.strip}
     f.close
 
+    title = meta[0]
+    alt_title = ''
+    
+    if title.match(/^(.+) \((.+)\)$/)
+      title = $~[1].strip
+      alt_title = $~[2].strip
+    end
+    
     {
-      :title => meta[0],
+      :title => title,
+      :alt_title => alt_title,
       :slug => slug,
       :description => meta[1]
     }

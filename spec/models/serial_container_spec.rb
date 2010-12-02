@@ -7,7 +7,8 @@ describe SerialContainer do
       attrs = {
         :title       => 'Доктор Хаус',
         :description => 'Сериал про мудака',
-        :slug        => 'house'
+        :slug        => 'house',
+        :alt_title   => 'House M.D'
       }
 
       @repo_path = RepositoryFactory(:serial, attrs)

@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
-SERIAL_KEY_ALIASES = {'название' => :title, 'описание' => :description, 'количество сезонов' => :count_seasons}
+SERIAL_KEY_ALIASES = {
+  'название' => :title,
+  'описание' => :description,
+  'количество сезонов' => :count_seasons,
+  'альтернативное название' => :alt_title,
+  'оригинальное название' => :alt_title
+}
 
 Given /^есть (\d+) разных сериалов$/ do |count_serials|
   count_serials.to_i.times { RepositoryFactory(:serial) }
@@ -94,6 +100,10 @@ Given /^есть такой сериал:$/ do |table|
   Repository.index!
 end
 
+Then /^я должен увидеть список эпизодов$/ do
+  page.should have_xpath("//div[@id='serial_seasons']")
+end
+
 Then /^я должен увидеть такой список сезонов:$/ do |table|
   table.raw.each do |options|
     season_index = options[0].match(/^(\d+).+/)[1].to_i
@@ -141,7 +151,12 @@ Then /^я должен увидеть проигрыватель$/ do
   sources.should include('mp4', 'webm')
 end
 
-Then /^я должен быть на странице (\d+) эпизода в (\d+) сезоне сериала "([^\"]*)"$/ do |episode_index, season_index, serial_title|
+Then /^я должен быть на странице сериала "([^\"]*)"$/ do |serial_title|
+  Then %Q{я должен увидеть "#{serial_title}"}
+  Then %Q{я должен увидеть список эпизодов}
+end
+
+Then /^я должен (?:быть|оказаться) на странице (\d+) эпизода (?:в|во) (\d+) сезоне сериала "([^\"]*)"$/ do |episode_index, season_index, serial_title|
   Then %Q{я должен увидеть "#{serial_title}"}
   Then %Q{я должен увидеть "#{episode_index} эпизод"}
   Then %Q{я должен увидеть "#{season_index} сезон"}

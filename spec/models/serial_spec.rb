@@ -4,6 +4,9 @@ describe Serial do
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:slug) }
   it { should validate_presence_of(:description) }
+  
+  it { should_not validate_presence_of(:alt_title) }
+  
   it { should have_many(:seasons, :dependent => :destroy) }
   
   # not working! WTF?
@@ -15,6 +18,15 @@ describe Serial do
   it { should have_attached_file(:thumbnail) }
   it { should validate_attachment_presence(:thumbnail) }
 
+  describe "attributes" do
+    subject { Factory(:serial).attributes }
+    
+    it { should include('title') }
+    it { should include('alt_title') }
+    it { should include('description') }
+    it { should include('slug') }
+  end
+  
   describe "#to_param" do
     subject { Factory(:serial) }
 

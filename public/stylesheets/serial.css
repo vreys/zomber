@@ -33,6 +33,14 @@
    font-size: 20px;
 }
 
+#serials_grid li a em {
+   display: block;
+   text-align: center;
+   font-style: normal;
+   font-size: 14px;
+   color: #aaa;
+}
+
 #serial_seasons {
    background: #050505 none no-repeat;
    padding: 40px;
@@ -50,7 +58,8 @@
    margin: 0px 0px 20px;
 }
 
-#serial_seasons h1 {
+#serial_seasons h1,
+#serial_seasons h2 {
    background-color: maroon;
    opacity: 0.8;
    font-size: 48px;
@@ -62,6 +71,11 @@
    -webkit-border-radius: 8px;
    padding: 20px;
    margin-bottom: 40px;
+}
+
+#serial_seasons h2 {
+   font-size: 32px;
+   float: right;
 }
 
 #serial_seasons .row {
@@ -119,6 +133,11 @@
    margin: 0 auto 20px!important;
 }
 
+#episode h1 em {
+   font-style: normal;
+   font-size: 28px;
+}
+
 #episode .nav .sixcol {
    font-size: 18px;
    color: #ccc;
@@ -131,3 +150,5 @@
 #episode .nav .sixcol.last {
    text-align: right;
 }
+
+
