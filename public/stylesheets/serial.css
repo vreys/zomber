@@ -130,12 +130,16 @@
 }
 
 .video-js-box {
-   margin: 0 auto 20px!important;
+   margin: 0 auto!important;
 }
 
 #episode h1 em {
    font-style: normal;
    font-size: 28px;
+}
+
+#episode .nav {
+   margin-top: 20px;
 }
 
 #episode .nav .sixcol {
