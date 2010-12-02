@@ -29,10 +29,10 @@ class Episode < ActiveRecord::Base
   end
 
   def mp4_path
-    mp4.gsub(Rails.root.join('media').to_s, '')
+    mp4.gsub(REPOS_PATH.to_s, '')
   end
 
   def webm_path
-    webm.gsub(Rails.root.join('media').to_s, '')
+    webm.gsub(REPOS_PATH.to_s, '')
   end
 end

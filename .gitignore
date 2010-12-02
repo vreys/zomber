@@ -6,3 +6,4 @@ tmp/**/*
 public/images/posters/*
 public/images/thumbnails/*
 media/repos/*
+public/repos/*

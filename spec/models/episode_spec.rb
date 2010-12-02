@@ -117,4 +117,30 @@ describe Episode do
       it { should be_nil }
     end
   end
+
+  describe "#mp4_path" do
+    before do
+      @episode = Factory(:episode)
+      @expected_path = @episode.mp4.gsub(REPOS_PATH, '')
+    end
+
+    subject { @episode.mp4_path }
+    
+    it "should return relative path to mp4" do
+      subject.should eql(@expected_path)
+    end
+  end
+
+  describe "#webm_path" do
+    before do
+      @episode = Factory(:episode)
+      @expected_path = @episode.webm.gsub(REPOS_PATH, '')
+    end
+
+    subject { @episode.webm_path }
+    
+    it "should return relative path to webm" do
+      subject.should eql(@expected_path)
+    end
+  end
 end

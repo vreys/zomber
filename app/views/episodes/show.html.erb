@@ -63,7 +63,11 @@
   <h3><%= @season.index %> сезон, <%= @episode.index %> эпизод</h3>
 
   <div class="video-js-box">
-    <%= video_tag([@episode.mp4_path, @episode.webm_path], :id => 'player', :width => 640, :height => 480) %>
+    <%= video_tag([
+                   repository_path(:path => @episode.mp4_path), 
+                   repository_path(:path => @episode.webm_path)
+                  ], :id => 'player', :width => 700, :height => 400,
+                   :controls => 'controls') %>
   </div>
 
   <div class="row nav">
