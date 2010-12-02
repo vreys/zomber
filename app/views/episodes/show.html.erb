@@ -8,7 +8,7 @@
     // Must come after the video.js library
 
     // Add VideoJS to all video tags on the page when the DOM is ready
-    VideoJS.setupAllWhenReady();
+    //VideoJS.setupAllWhenReady();
 
     /* ============= OR ============ */
 
@@ -16,19 +16,14 @@
     // Must happen after the DOM is loaded
     // You can use any library's DOM Ready method instead of VideoJS.DOMReady
 
-    /*
     VideoJS.DOMReady(function(){
-    
-    // Using the video's ID or element
     var myPlayer = VideoJS.setup("player");
-    
-    // OR using an array of video elements/IDs
-    // Note: It returns an array of players
-
-    // After you have references to your players you can...(example)
-    #myPlayer.play(); // Starts playing the video for this player.
+    controlsBelow: true, // Display control bar below video instead of in front of
+    controlsHiding: true, // Hide controls when mouse is not over the video
+    defaultVolume: 0.85, // Will be overridden by user's last volume if available
+    flashVersion: 9, // Required flash version for fallback
+    linksHiding: true // Hide download links when video is supported
     });
-    */
 
     /* ========= SETTING OPTIONS ========= */
 
@@ -67,7 +62,7 @@
                    repository_path(:path => @episode.mp4_path), 
                    repository_path(:path => @episode.webm_path)
                   ], :id => 'player', :width => 700, :height => 400,
-                   :controls => 'controls') %>
+                   :controls => 'controls', :class => 'video-js') %>
   </div>
 
   <div class="row nav">
