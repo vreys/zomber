@@ -39,6 +39,25 @@ h3 {
    font-size: 24px;
 }
 
+#footer {
+   margin-top: 55px;
+}
+
+#footer img {
+   float: left;
+}
+
+#footer p {
+   font-size: 11px;
+   text-align: right;
+   color: #3A3A3A;
+}
+
+#footer .sixcol.last {
+   position: relative;
+   height: 80px;
+}
+
 /* Layout for mobile version */
 
 @media handheld, only screen and (max-width: 767px) {
@@ -64,3 +83,5 @@ background-size: 27px 28px;
 */
 
 }
+
+
