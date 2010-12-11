@@ -16,7 +16,7 @@
   <h3><%= @season.index %> сезон, <%= @episode.index %> эпизод</h3>
 
   <div class="video-js-box vim-css">
-    <video id="player" class="video-js" width="700" height="400" controls="controls">
+    <video id="player" class="video-js"  controls="controls">
       <source src="<%= repository_path(:path => @episode.webm_path) %>" type='video/webm; codecs="vp8, vorbis"' />
       <source src="<%= repository_path(:path => @episode.mp4_path) %>"
       type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
