@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101202081752) do
+ActiveRecord::Schema.define(:version => 20101211100001) do
 
   create_table "episodes", :force => true do |t|
     t.integer  "season_id"
@@ -44,5 +44,28 @@ ActiveRecord::Schema.define(:version => 20101202081752) do
     t.datetime "thumbnail_updated_at"
     t.string   "alt_title"
   end
+
+  create_table "users", :force => true do |t|
+    t.string   "email",                               :default => "", :null => false
+    t.string   "encrypted_password",   :limit => 128, :default => ""
+    t.string   "password_salt",                       :default => ""
+    t.string   "reset_password_token"
+    t.string   "remember_token"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",                       :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "invitation_token",     :limit => 20
+    t.datetime "invitation_sent_at"
+    t.string   "name"
+  end
+
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["invitation_token"], :name => "index_users_on_invitation_token"
+  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end
