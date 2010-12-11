@@ -2,7 +2,7 @@
   <a href="<%= serial_path(@serial) %>">Страница сериала "<%= @serial.title %>"</a> | <a href="<%= root_path %>">Список всех сериалов</a>
 <% end %>
 <div id="episode" class="row">
-  <script src="/video-js-2.0.1/video.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/video-js-2.0.1/video.js" href="" type="text/javascript" charset="utf-8" ></script>
 
   <script type="text/javascript">
     VideoJS.setupAllWhenReady();
@@ -18,7 +18,9 @@
   <div class="video-js-box vim-css">
     <video id="player" class="video-js" width="700" height="400" controls="controls">
       <source src="<%= repository_path(:path => @episode.webm_path) %>" type='video/webm; codecs="vp8, vorbis"' />
-      <source src="<%= repository_path(:path => @episode.mp4_path) %>" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
+      <source src="<%= repository_path(:path => @episode.mp4_path) %>"
+      type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
+    </video>
   </div>
 
   <div class="row nav">
