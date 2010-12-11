@@ -1,4 +1,6 @@
 Hdtv::Application.routes.draw do
+  devise_for :users, :controllers => { :invitations => "users/invitations" }
+
   root :to => 'serials#index'
 
   resources :serials, :only => [:index, :show] do

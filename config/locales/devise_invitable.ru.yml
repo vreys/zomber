@@ -1,5 +1,7 @@
 ru:
   devise:
+    invitations:
+      updated: 'Вы зарегистрированы, спасибо'
     mailer:
       invitation:
         subject: 'Приглашение на zomber.tv'

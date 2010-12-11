@@ -32,6 +32,18 @@
           </a>
         </div>
 
+        <% if flash.any? %>
+          <div class="twelvecol">
+            <% if flash[:notice] %>
+              <p class="notice"><%= flash[:notice] %></p>
+            <% end %>
+
+            <% if flash[:error] %>
+              <p class="error"><%= flash[:error] %></p>
+            <% end %>
+          </div>
+        <% end %>
+
         <div class="sixcol last">
           <div id="menu">
             <%= yield :menu %>

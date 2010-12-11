@@ -25,9 +25,11 @@ group :development, :test do
 end
 
 group :cucumber do
+  gem 'nokogiri', '~> 1.4.4'
   gem 'aruba', '~> 0.2.6'
   gem 'cucumber', '0.9.4'
   gem 'cucumber-rails', '0.3.2'
   gem 'capybara', '0.4.0'
   gem 'database_cleaner', '~> 0.6.0'
+  gem 'launchy', '~> 0.3.3'
 end

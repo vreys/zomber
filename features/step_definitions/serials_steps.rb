@@ -13,6 +13,10 @@ Given /^есть (\d+) разных сериалов$/ do |count_serials|
   Repository.index!
 end
 
+Then /^я должен увидеть список сериалов$/ do
+  page.should have_xpath('//div[@id="serials_grid"]')
+end
+
 Then /^я должен увидеть список из (\d+) сериалов$/ do |count_serials|
   all('#serials_grid li').count.should eql(count_serials.to_i)
 end

@@ -45,6 +45,14 @@ Then /^я должен увидеть ссылку "([^\"]*)"$/ do |text|
   page.should have_xpath('//a', :text => text)
 end
 
+When /^я ввожу "([^\"]*)" в поле "([^\"]*)"$/ do |value, field|
+  fill_in(field, :with => value)
+end
+
+When /^я нажимаю "([^\"]*)"$/ do |button|
+  click_button(button)
+end
+
 # Given /^(?:|I )am on (.+)$/ do |page_name|
 #   visit path_to(page_name)
 # end
