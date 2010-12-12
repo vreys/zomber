@@ -429,6 +429,7 @@ VideoJS.player.extend({
       this.buildAndActivateControlBar();
       this.loadInterface(); // Show everything once styles are loaded
       this.getSubtitles();
+      document.addEventListener("keydown", this.fullscreenOnF11Key.context(this), false);
     }
   },
   /* Source Managemet
@@ -1349,6 +1350,15 @@ VideoJS.player.newBehavior("fullscreenToggle", function(element){
       if (event.keyCode == 27) {
         this.fullscreenOff();
       }
+    },
+    fullscreenOnF11Key: function(event){ // Removeable
+      if (event.keyCode == 122) {
+        if (!this.videoIsFullScreen) {
+          this.fullscreenOn();
+        } else {
+          this.fullscreenOff();
+        }
+      }
     }
   }
 );
@@ -1592,6 +1602,7 @@ VideoJS.extend({
   DOMContentLoaded: function(){
     if (document.addEventListener) {
       document.removeEventListener( "DOMContentLoaded", VideoJS.DOMContentLoaded, false);
+ 
       VideoJS.onDOMReady();
     } else if ( document.attachEvent ) {
       if ( document.readyState === "complete" ) {
