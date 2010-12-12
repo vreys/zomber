@@ -420,7 +420,7 @@ VideoJS.player.extend({
 
       // Make a click on th video act as a play button
       this.activateElement(this.video, "playToggle");
-      
+
       // Build Interface
       this.buildStylesCheckDiv(); // Used to check if style are loaded
       this.buildAndActivatePoster();
@@ -429,7 +429,6 @@ VideoJS.player.extend({
       this.buildAndActivateControlBar();
       this.loadInterface(); // Show everything once styles are loaded
       this.getSubtitles();
-/*      this.fullscreenOnF11Key = this.fullscreenOnF11Key.context(this);*/
     }
   },
   /* Source Managemet
@@ -1293,7 +1292,7 @@ VideoJS.player.newBehavior("volumeScrubber", function(element){
 /* Fullscreen Toggle Behaviors
 ================================================================================ */
 VideoJS.player.newBehavior("fullscreenToggle", function(element){
-    _V_.addListener(document, "keydown", this.fullscreenOnF11Key.rEvtContext(this));
+    _V_.addListener(element, "click", this.onFullscreenToggleClick.context(this));
   },{
     // When the user clicks on the fullscreen button, update fullscreen setting
     onFullscreenToggleClick: function(event){
@@ -1350,17 +1349,8 @@ VideoJS.player.newBehavior("fullscreenToggle", function(element){
       if (event.keyCode == 27) {
         this.fullscreenOff();
       }
-    },
-/*    fullscreenOnF11Key: function(event) {
-      if (event.keyCode == 122) {
-        if (!this.videoIsFullScreen) {
-          this.fullscreenOn();
-        } else {
-        this.fullscreenOff();
-        }
-      }
-    },
-  
+    }
+  }
 );
 /* Big Play Button Behaviors
 ================================================================================ */
