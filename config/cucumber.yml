@@ -1,1 +1,1 @@
-default: "--format 'progress' --strict --tags ~@wip features"
+default: "--guess --format 'progress' --strict --tags ~@wip features"

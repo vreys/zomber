@@ -25,24 +25,16 @@ Then /^на email "([^\"]*)" должно прийти приглашение$/ 
   mail.body.to_s.should match(/Вы приглашены на (.+)zomber.tv(.+)/i)
 end
 
-Given /^меня зовут "([^\"]*)"$/ do |name|
-  @my_name = name
-end
-
-Given /^у меня такой email: "([^\"]*)"$/ do |email|
-  @my_email = email
-end
-
 Given /^мне отправлено приглашение$/ do
   When %Q{я запускаю программу приглашения}
-  When %Q{я ввожу "#{@my_email}"}
-  When %Q{я ввожу "#{@my_name}"}
-  Then %Q{вывод должен содержать "Приглашение отправлено по адресу <#{@my_email}> (получатель: #{@my_name})"}
-  Then %Q{на email "#{@my_email}" должно прийти приглашение}
+  When %Q{я ввожу "#{user_email}"}
+  When %Q{я ввожу "#{user_name}"}
+  Then %Q{вывод должен содержать "Приглашение отправлено по адресу <#{user_email}> (получатель: #{user_name})"}
+  Then %Q{на email "#{user_email}" должно прийти приглашение}
 end
 
 When /^я прохожу по ссылке "([^\"]*)" в письме "([^\"]*)"$/ do |link_text, mail_title|
-  mail = delivery_for(@my_email)
+  mail = delivery_for(user_email)
 
   mail_body = Nokogiri::HTML(mail.body.to_s)
 
@@ -51,18 +43,11 @@ When /^я прохожу по ссылке "([^\"]*)" в письме "([^\"]*)"
   visit(href)
 end
 
-Then /^я должен увидеть текстовое поле со своим именем$/ do
-  page.should have_xpath(%Q{//input[@value="#{@my_name}"]})
-end
-
-Then /^я должен увидеть текстовое поле со своим email$/ do
-  page.should have_xpath(%Q{//input[@value="#{@my_email}"]})
-end
-
-Then /^я должен увидеть свое имя$/ do
-  Then %Q{я должен увидеть "#{@my_name}"}
-end
-
-Then /^я должен увидеть свой email$/ do
-  Then %Q{я должен увидеть "#{@my_email}"}
+Given /^я зарегистрирован по приглашению$/ do
+  Given %Q{никаких писем не отправлено}
+  Given %Q{мне отправлено приглашение}
+  When %Q{я прохожу по ссылке "Регистрация по приглашению" в письме "Приглашение на zomber.tv"}
+  When %Q{я ввожу свой пароль в поле "Пароль"}
+  When %Q{я нажимаю "Зарегистрироваться"}
+  When %Q{я прохожу по ссылке "Выход"}
 end

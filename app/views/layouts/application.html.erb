@@ -32,8 +32,19 @@
           </a>
         </div>
 
+        <div class="sixcol last">
+          <div id="menu">
+            <% if current_user %>
+              <%= current_user.name %> <%= "<#{current_user.email}>" %>
+              <%= link_to('Выход', destroy_user_session_path) %>
+            <% end %>
+
+            <%= yield :menu %>
+          </div>
+        </div>
+
         <% if flash.any? %>
-          <div class="twelvecol">
+          <div>
             <% if flash[:notice] %>
               <p class="notice"><%= flash[:notice] %></p>
             <% end %>
@@ -41,14 +52,12 @@
             <% if flash[:error] %>
               <p class="error"><%= flash[:error] %></p>
             <% end %>
+
+            <% if flash[:alert] %>
+              <p class="error"><%= flash[:alert] %></p>
+            <% end %>
           </div>
         <% end %>
-
-        <div class="sixcol last">
-          <div id="menu">
-            <%= yield :menu %>
-          </div>
-        </div>
       </div>
       <%= yield %>
     </div>

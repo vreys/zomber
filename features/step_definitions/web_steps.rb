@@ -17,11 +17,11 @@ module WithinHelpers
 end
 World(WithinHelpers)
 
-When /^я захожу в (.+)$/ do |page_name|
+When /^я захожу (?:в|на) (.+)$/ do |page_name|
   visit path_to(page_name)
 end
 
-Then /^я хочу увидеть результат$/ do
+Then /^я (?:хочу|должен) увидеть результат$/ do
   save_and_open_page
 end
 
@@ -51,6 +51,14 @@ end
 
 When /^я нажимаю "([^\"]*)"$/ do |button|
   click_button(button)
+end
+
+Then /^я должен увидеть поле "([^\"]*)"$/ do |field_label|
+  find_field(field_label).should_not be_nil
+end
+
+Then /^я должен увидеть кнопку "([^\"]*)"$/ do |button_text|
+  find_button(button_text)
 end
 
 # Given /^(?:|I )am on (.+)$/ do |page_name|

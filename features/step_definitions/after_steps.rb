@@ -5,3 +5,8 @@ After do
     FileUtils.rm_r(dir_path) if File.exists?(dir_path)
   end
 end
+
+After do
+  @my_email = ''
+  @my_name = ''
+end

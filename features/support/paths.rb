@@ -9,11 +9,14 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
 
-    when /the home\s?page/
+    when /главную страниц(а|у)/
       '/'
 
     when /раздел сериалов/
       '/'
+
+    when /страницу выхода/
+      '/users/sign_out'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
