@@ -7,4 +7,6 @@ describe User do
   it { should_not be_a_registerable }
   it { should be_a_database_authenticatable }
   it { should be_a_rememberable }
+  it { should be_a_validatable }
+  it { should validate_presence_of(:name) }
 end

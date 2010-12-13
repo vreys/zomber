@@ -1,5 +1,7 @@
 #source 'http://localhost'
 source 'http://rubygems.org'
+#source 'http://rubyforge.org'
+#source 'http://gems.github.com'
 
 gem 'rails', '~> 3.0.1'
 gem 'sqlite3-ruby', '~> 1.3.2', :require => 'sqlite3'
@@ -8,6 +10,7 @@ gem 'highline', "~> 1.6.1"
 gem 'termios', "~> 0.9.4"
 gem 'devise',           '~> 1.1.3'
 gem 'devise_invitable', '~> 0.3.4'
+gem 'russian', :git => 'git://github.com/yaroslav/russian.git'
 
 group :development, :test do
   gem 'mongrel', '~> 1.1.5'

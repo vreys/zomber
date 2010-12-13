@@ -1,0 +1,15 @@
+ru:
+  activerecord:
+    attributes:
+      user:
+        password: 'Пароль'
+        name: 'Имя'
+    
+    errors:
+      models:
+        user:
+          attributes:
+            name:
+              blank: 'у человека всегда есть'
+            email:
+              invalid: 'должен выглядеть как email'

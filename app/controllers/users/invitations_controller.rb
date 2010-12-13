@@ -10,6 +10,8 @@ class Users::InvitationsController < Devise::InvitationsController
       set_flash_message :notice, :updated
       sign_in_and_redirect(@user)
     else
+      flash[:alert] = @user.errors.full_messages.first
+
       render :edit
     end
   end
