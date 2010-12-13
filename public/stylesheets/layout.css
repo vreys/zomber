@@ -2,15 +2,11 @@
 
 body {
    font-family: Georgia;
-   padding: 30px 0px 50px;
+   padding: 30px 0px 0px;
 }
 
 #header {
-   margin-bottom: 30px;
-}
-
-#header img {
-   float: left;
+   margin-bottom: 0px;
 }
 
 #header .sixcol.last {
@@ -18,11 +14,19 @@ body {
    height: 80px;
 }
 
+#logo {
+   max-width: 537px;
+}
+
 #menu {
    position: absolute;
    text-align: right;
    bottom: 0;
    width: 100%;
+}
+
+#userbar {
+   text-align: right;
 }
 
 #menu a {
@@ -40,7 +44,7 @@ h3 {
 }
 
 #footer {
-   margin-top: 55px;
+   margin-top: 65px;
 }
 
 #footer img {
@@ -56,6 +60,115 @@ h3 {
 #footer .sixcol.last {
    position: relative;
    height: 80px;
+}
+
+#logo {
+   display: block;
+   border: none;
+   margin: 0 auto;
+}
+
+#messages {
+   height: 40px;
+   padding: 10px;
+   text-align: center;
+}
+
+#messages span {
+   border-radius: 8px;
+   -moz-border-radius: 8px;
+   -webkit-border-radius: 8px;
+   font-size: 16px;
+   padding: 10px;
+   background-color: #e2ebd1;
+   color: #676b60;
+   font-family: Verdana;
+}
+
+#messages span.alert,
+#messages span.error {
+   color: #fff;
+   background-color: #a30000;
+}
+
+/* Large Form */
+form.large {
+   max-width: 800px;
+   margin: 0 auto;
+   box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   -webkit-box-sizing: border-box;
+   border-radius: 8px;
+   -moz-border-radius: 8px;
+   -webkit-border-radius: 8px;
+   /* background-color: #CBC2AE; */
+   background-color: #c1cbae;
+   padding: 8px;
+   font-family: Arial;
+}
+
+form.large .inner {
+   padding: 30px;
+/*   background: #EBE3D1;*/
+   background-color: #e2ebd1;
+   border-radius: 8px;
+   -moz-border-radius: 8px;
+   -webkit-border-radius: 8px;
+}
+
+form.large .field_wrap {
+   margin-bottom: 15px;
+}
+
+form.large h1 {
+   font-weight: bold;
+   font-family: Arial;
+}
+
+form.large .field_wrap input[type=text],
+   form.large .field_wrap input[type=password] {
+      border: 2px solid #c1cbae;
+      padding: 15px;
+      width: 100%;
+      font-size: 42px;
+      border-radius: 8px;
+      -moz-border-radius: 8px;
+      -webkit-border-radius: 8px;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      background-color: #f4fce3;
+   }
+
+form.large .field_with_errors input[type=text],
+   form.large .field_with_errors input[type=password] {
+      background-color: #fcebe3;
+}
+
+form.large .field_wrap input[type=text]:focus,
+   form.large .field_wrap input[type=password]:focus {
+      outline: none;
+}
+
+form.large .field_wrap label {
+   font-size: 24px;
+   text-transform: lowercase;
+   line-height: 1.5em;
+   color: #676b60;
+}
+
+form.large input[type=submit] {
+   background: #74b0b0 url('../images/zombobutton.png') repeat-x bottom;
+   color: #fff;
+   text-shadow: #2f4f4f 1px 1px 1px;
+   padding: 15px;
+   font-size: 24px;
+   border: 1px solid #355959;
+   border-color: #5fa1a1 #5fa1a1 #4a7d7d;
+   border-radius: 8px;
+   -moz-border-radius: 8px;
+   -webkit-border-radius: 8px;
+   cursor: pointer;
 }
 
 /* Layout for mobile version */
