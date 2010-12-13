@@ -1,0 +1,19 @@
+<div id="messages" class="row">
+  <% if flash.any? %>
+    <% if flash[:success] %>
+      <span class="notice"><%= flash[:success] %></span>
+    <% end %>
+
+    <% if flash[:notice] %>
+      <span class="notice"><%= flash[:notice] %></span>
+    <% end %>
+
+    <% if flash[:error] %>
+      <span class="error"><%= flash[:error] %></span>
+    <% end %>
+
+    <% if flash[:alert] %>
+      <span class="alert"><%= flash[:alert] %></span>
+    <% end %>
+  <% end %>
+</div>

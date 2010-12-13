@@ -8,3 +8,5 @@ ru:
   devise:
     failure:
       invalid: 'Вы указали неверный email или пароль'
+    sessions:
+      signed_in: 'Вход выполнен'

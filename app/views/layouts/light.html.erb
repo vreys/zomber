@@ -22,25 +22,12 @@
     <%= csrf_meta_tag %>
   </head>
 
-  <body>
+  <body class="light">
     <div class="container">
       <div id="header" class="row">
-        <div class="sixcol">
-          <%= render_logo %>
-        </div>
-
-        <div class="sixcol last">
-          <div id="menu">
-            <% if current_user %>
-              <%= current_user.name %> <%= "<#{current_user.email}>" %>
-              <%= link_to('Выход', destroy_user_session_path) %>
-            <% end %>
-
-            <%= yield :menu %>
-          </div>
-        </div>
+        <%= render_logo %>
       </div>
-
+      
       <%= render_messages %>
 
       <%= yield %>
