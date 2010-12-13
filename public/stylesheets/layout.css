@@ -112,8 +112,8 @@ form.large .inner {
    -webkit-border-radius: 8px;
 }
 
-form.large .inner p:last {
-   padding-bottom: 0px;
+form.large .field_wrap {
+   margin-bottom: 15px;
 }
 
 form.large h1 {
@@ -121,8 +121,8 @@ form.large h1 {
    font-family: Arial;
 }
 
-form.large p input[type=text],
-   form.large p input[type=password] {
+form.large .field_wrap input[type=text],
+   form.large .field_wrap input[type=password] {
       border: 2px solid #c1cbae;
       padding: 15px;
       width: 100%;
@@ -136,19 +136,24 @@ form.large p input[type=text],
       background-color: #f4fce3;
    }
 
-form.large p input[type=text]:focus,
-   form.large p input[type=password]:focus {
+form.large .field_with_errors input[type=text],
+   form.large .field_with_errors input[type=password] {
+      background-color: #fcebe3;
+}
+
+form.large .field_wrap input[type=text]:focus,
+   form.large .field_wrap input[type=password]:focus {
       outline: none;
 }
 
-form.large p label {
+form.large .field_wrap label {
    font-size: 24px;
    text-transform: lowercase;
    line-height: 1.5em;
    color: #676b60;
 }
 
-form.large p input[type=submit] {
+form.large input[type=submit] {
    background: #74b0b0 url('../images/zombobutton.png') repeat-x bottom;
    color: #fff;
    text-shadow: #2f4f4f 1px 1px 1px;
