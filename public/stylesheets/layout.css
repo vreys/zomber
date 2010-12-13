@@ -25,6 +25,10 @@ body {
    width: 100%;
 }
 
+#userbar {
+   text-align: right;
+}
+
 #menu a {
    font-weight: normal;
 }

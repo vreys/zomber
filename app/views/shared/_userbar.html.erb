@@ -1,0 +1,6 @@
+<div id="userbar">
+  <% if current_user %>
+    <strong><%= current_user.name %></strong> <%= "<#{current_user.email}>" %>
+    <%= link_to('Выход', destroy_user_session_path) %>
+  <% end %>
+</div>

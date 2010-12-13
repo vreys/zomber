@@ -30,12 +30,9 @@
         </div>
 
         <div class="sixcol last">
-          <div id="menu">
-            <% if current_user %>
-              <%= current_user.name %> <%= "<#{current_user.email}>" %>
-              <%= link_to('Выход', destroy_user_session_path) %>
-            <% end %>
+          <%= render_userbar %>
 
+          <div id="menu">
             <%= yield :menu %>
           </div>
         </div>

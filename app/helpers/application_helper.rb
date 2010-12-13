@@ -10,4 +10,8 @@ module ApplicationHelper
   def render_messages
     render :partial => 'shared/messages'
   end
+
+  def render_userbar
+    render :partial => 'shared/userbar'
+  end
 end
