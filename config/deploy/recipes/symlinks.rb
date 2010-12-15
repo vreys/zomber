@@ -1,8 +1,6 @@
 Capistrano::Configuration.instance(:must_exist).load do
   # These are set to the same structure in shared <=> current
   set :normal_symlinks, %w(
-    tmp
-    log
     config/database.yml
     bundle
     db/production.sqlite3
