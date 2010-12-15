@@ -50,7 +50,7 @@ Hdtv::Application.configure do
 
   config.action_mailer.default_url_options = { :host => 'zomber.tv' }
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.file_settings = {
+  config.action_mailer.smtp_settings = {
     :address => 'mail.aknet.kg',
     :port => 25
   }
