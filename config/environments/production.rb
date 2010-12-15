@@ -47,5 +47,5 @@ Hdtv::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.action_mailer.default_url_options = { :host => '91.213.233.101' }
+  config.action_mailer.default_url_options = { :host => 'zomber.tv' }
 end
