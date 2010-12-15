@@ -1,9 +1,3 @@
-GIT
-  remote: git://github.com/yaroslav/russian.git
-  revision: 576bc58914ed18402005338a345f29303bd0fe95
-  specs:
-    russian (0.2.7)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -41,6 +35,14 @@ GEM
     background_process (1.2)
     bcrypt-ruby (2.1.2)
     builder (2.1.2)
+    capistrano (2.5.19)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.0.0)
+    capistrano-ext (1.2.1)
+      capistrano (>= 1.0.0)
     capybara (0.4.0)
       celerity (>= 0.7.9)
       culerity (>= 0.2.4)
@@ -66,6 +68,9 @@ GEM
       cucumber (>= 0.8.0)
     culerity (0.2.12)
     daemons (1.1.0)
+    dark-capistrano-recipes (0.6.17)
+      capistrano (>= 2.5.9)
+      capistrano-ext (>= 1.2.1)
     database_cleaner (0.6.0)
     devise (1.1.5)
       bcrypt-ruby (~> 2.1.2)
@@ -85,6 +90,7 @@ GEM
       json (~> 1.4.6)
       term-ansicolor (~> 1.0.5)
     highline (1.6.1)
+    hirb (0.3.5)
     i18n (0.5.0)
     json (1.4.6)
     json_pure (1.4.6)
@@ -105,6 +111,13 @@ GEM
       daemons (>= 1.0.3)
       fastthread (>= 1.0.1)
       gem_plugin (>= 0.2.3)
+    net-scp (1.0.4)
+      net-ssh (>= 1.99.1)
+    net-sftp (2.0.5)
+      net-ssh (>= 2.0.9)
+    net-ssh (2.0.23)
+    net-ssh-gateway (1.0.1)
+      net-ssh (>= 1.99.1)
     nokogiri (1.4.4)
     paperclip (2.3.6)
       activerecord
@@ -167,6 +180,7 @@ GEM
     ruby-debug-base (0.10.4)
       linecache (>= 0.3)
     rubyzip (0.9.4)
+    russian (0.2.7)
     selenium-webdriver (0.1.1)
       childprocess (= 0.1.4)
       ffi (~> 0.6.3)
@@ -190,15 +204,18 @@ PLATFORMS
 
 DEPENDENCIES
   aruba (~> 0.2.6)
+  capistrano (~> 2.5.19)
   capybara (= 0.4.0)
   cucumber (= 0.9.4)
   cucumber-rails (= 0.3.2)
+  dark-capistrano-recipes (~> 0.6.17)
   database_cleaner (~> 0.6.0)
   devise (~> 1.1.3)
   devise_invitable (~> 0.3.4)
   factory_girl (~> 1.3.2)
   faker (~> 0.3.1)
   highline (~> 1.6.1)
+  hirb
   launchy (~> 0.3.3)
   mocha
   mongrel (~> 1.1.5)
@@ -212,7 +229,7 @@ DEPENDENCIES
   rspec (~> 2.1.0)
   rspec-rails (~> 2.1.0)
   ruby-debug (~> 0.10.4)
-  russian!
+  russian (~> 0.2.7)
   sqlite3-ruby (~> 1.3.2)
   termios (~> 0.9.4)
   wirble (~> 0.1.3)

@@ -10,7 +10,10 @@ gem 'highline', "~> 1.6.1"
 gem 'termios', "~> 0.9.4"
 gem 'devise',           '~> 1.1.3'
 gem 'devise_invitable', '~> 0.3.4'
-gem 'russian', :git => 'git://github.com/yaroslav/russian.git'
+gem 'russian', '~> 0.2.7'
+gem 'capistrano', '~> 2.5.19'
+gem 'dark-capistrano-recipes', '~> 0.6.17'
+gem 'hirb'
 
 group :development, :test do
   gem 'mongrel', '~> 1.1.5'
