@@ -15,7 +15,7 @@ Capistrano::Configuration.instance(:must_exist).load do
 
   # The wrapped bin to start unicorn
   # This is necessary if you're using rvm
-  set :unicorn_bin, 'unicorn_rails' unless exists?(:unicorn_bin)
+  set :unicorn_bin, 'bundle exec unicorn_rails' unless exists?(:unicorn_bin)
 
   set :unicorn_socket do
     File.join(sockets_path,'unicorn.sock')

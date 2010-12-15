@@ -5,10 +5,6 @@ require 'config/deploy/recipes/unicorn'
 require 'config/deploy/recipes/symlinks'
 require 'config/deploy/recipes/hooks'
 
-default_environment["HTTP_PROXY"] = "http://numberone.kg:1234"
-default_environment["GEM_HOME"] = "$HOME/.gem"
-default_environment["PATH"] = "$PATH:$HOME/.gem/bin"
-
 set :application, "zomber"
 
 ##################################################
@@ -70,6 +66,10 @@ namespace :deploy do
     unicorn.restart
   end
 end
+
+default_environment["HTTP_PROXY"] = "http://numberone.kg:1234"
+default_environment["GEM_HOME"] = "$HOME/.gem"
+default_environment["PATH"] = "$PATH:$HOME/.gem/bin:#{shared_path}/bundle/ruby/1.8/bin"
 
 ##################################################
 ## Репозиторий кода
