@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 require 'config/deploy/helpers'
 require 'config/deploy/recipes/nginx'
+require 'config/deploy/recipes/unicorn'
+require 'config/deploy/recipes/symlinks'
+require 'config/deploy/recipes/hooks'
 
 default_environment["HTTP_PROXY"] = "http://numberone.kg:1234"
 default_environment["GEM_HOME"] = "$HOME/.gem"
@@ -26,6 +29,8 @@ set :user, "zomber"
 set :group, "dev"
 set :use_sudo, false
 
+default_run_options[:pty] = false
+
 ##################################################
 ## Приложение
 ##################################################
@@ -36,67 +41,44 @@ set :rails_env, "production"
 
 set :application_port, 80
 
+set :shared_dirs, %w( config bundle tmp run pids db posters thumbnails repos )
+
 set :sockets_path, "#{shared_path}/run"
 set :pids_path, "#{shared_path}/pids"
 
-set :unicorn_socket, File.join(sockets_path,'unicorn.sock') unless exists?(:unicorn_socket)
+set :unicorn_socket, File.join(sockets_path,'unicorn.sock')
 
-# set :app_server, :unicorn
-# set :web_server, :nginx
+namespace :app do
+  task :setup, :roles => :app do
+    commands = shared_dirs.map do |path|
+      "if [ ! -d '#{path}' ]; then mkdir -p #{path}; fi;"
+    end
+    run "cd #{shared_path}; #{commands.join(' ')}"
+  end
+end
 
-# set :application_port, 80
-# set :application_uses_ssl, false
+namespace :deploy do
+  task :start, :roles => :app, :except => { :no_release => true } do
+    unicorn.start
+  end
 
-# set :database, :sqlite
+  task :stop, :roles => :app, :except => { :no_release => true } do
+    unicorn.stop
+  end
 
-# #set :using_rvm, false
+  task :restart, :roles => :app, :except => { :no_release => true } do
+    unicorn.restart
+  end
+end
 
-# set :shared_children, shared_children + ['run']
+##################################################
+## Репозиторий кода
+##################################################
+set :scm, :git
+set :repository, "zomber@91.213.233.101:zomber.git"
+set :branch, "master"
 
-# set :sockets_path, "#{shared_path}/run"
-# set :pids_path, "#{shared_path}/pids"
+set :git_shallow_clone, 1
+set :deploy_via, :remote_cache
 
-# ##################################################
-# ## Репозиторий кода
-# ##################################################
-# set :scm, :git
-# set :repository, "zomber@91.213.233.101:zomber.git"
-# set :branch, "master"
-
-# set :git_shallow_clone, 1
-# set :deploy_via, :remote_cache
-
-# set :scm_verbose, true
-
-# ##################################################
-# ## Nginx
-# ##################################################
-# set :nginx_bin, "/usr/local/sbin/nginx"
-# set :nginx_path_prefix, "/usr/local/nginx"
-
-# # Шаблон конфига (ERB)
-# set :nginx_local_config, File.join("config", "nginx.conf.erb")
-
-# # Куда класть конфиг на удаленном сервере
-# set :nginx_remote_config, File.join(shared_path, "config", "#{application}.nginx.conf")
-
-# ##################################################
-# ## Unicorn
-# ##################################################
-# set :unicorn_workers, 2
-# set :unicorn_workers_timeout, 30
-
-# set :unicorn_user, user
-# set :unicorn_group, group
-
-# # Шаблон конфига (ERB)
-# set :unicorn_local_config, File.join("config", "unicorn.rb.erb")
-
-# # Конфиг на удаленном сервере
-# set :unicorn_remote_config, File.join(shared_path, "config", "unicorn.rb")
-
-# #require 'capistrano_recipes'
-# #require 'config/deploy/nginx'
-
-# default_run_options[:pty] = false
-# #ssh_options[:forward_agent] = false
+set :scm_verbose, true
