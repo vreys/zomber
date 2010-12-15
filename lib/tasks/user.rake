@@ -1,12 +1,24 @@
 # -*- coding: utf-8 -*-
 require 'highline'
+require "highline/import"
+
+require 'hirb'
+
+extend Hirb::Console
+
+ft = HighLine::ColorScheme.new do |cs|
+  cs[:headline]        = [ :bold, :blue ]
+  cs[:horizontal_line] = [ :bold, :white ]
+  cs[:error]           = [ :red ]
+  cs[:success]         = [ :green ]
+end
+
+HighLine.color_scheme = ft
 
 namespace :user do
   task :invite => [:environment] do
-    h = HighLine.new
-
-    email = h.ask("Электопочта получателя: ")
-    name = h.ask("Имя получателя: ")
+    email = ask("Электопочта получателя: ")
+    name = ask("Имя получателя: ")
 
     user = User.invite!(:email => email, :name => name)
 
@@ -24,9 +36,7 @@ namespace :user do
   end
 
   task :destroy => [:environment] do
-    h = HighLine.new
-
-    email = h.ask("Кого удалить (email)? ")
+    email = ask("Кого удалить (email)? ")
 
     user = User.find_by_email(email)
 
@@ -39,4 +49,36 @@ namespace :user do
       puts "Таких не знаем -_-"
     end
   end
+
+  task :list => [:environment] do
+    table(User.all, :fields => [:name, :email, :invitation_sent_at, :created_at, :invitation_token, :invited?])
+  end
+
+  task :add => [:environment] do
+    render_header("Новый пользователь")
+    
+    user = User.new
+    
+    user.email    = ask(" Электоропочта: ")
+    user.name     = ask("           Имя: ")
+    user.password = ask("        Пароль: ") {|p| p.echo = false}
+
+    user.save
+
+    puts ""
+
+    if user.errors.empty?
+      say(" <%= color('Пользователь сохранен', :success) %>")
+    else
+      user.errors.full_messages.each do |m|
+        say(" <%= color('#{m}', :error) %>")
+      end
+    end
+  end
+
+  def render_header(text)
+    say(" <%= color('Новый пользователь', :headline) %>")
+    puts ""
+  end
+
 end
