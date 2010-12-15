@@ -4,11 +4,10 @@ require "highline/import"
 
 require 'hirb'
 
-extend Hirb::Console
-
 ft = HighLine::ColorScheme.new do |cs|
   cs[:headline]        = [ :bold, :blue ]
   cs[:horizontal_line] = [ :bold, :white ]
+  cs[:notice]          = [ :yellow ]
   cs[:error]           = [ :red ]
   cs[:success]         = [ :green ]
 end
@@ -16,22 +15,32 @@ end
 HighLine.color_scheme = ft
 
 namespace :user do
-  task :invite => [:environment] do
-    email = ask("Электопочта получателя: ")
-    name = ask("Имя получателя: ")
+  USER_INVITE_ARG_NAMES = [:name, :email]
+  
+  task :invite, [:name, :email] => :environment do |t, args|
+    render_header("Приглашение пользователя")
+    
+    email = args[:name]  ||  ask(" Электопочта получателя: ")
+    name  = args[:email] ||  ask("         Имя получателя: ")
 
-    user = User.invite!(:email => email, :name => name)
+    begin
+      user = User.invite!(:email => email, :name => name)
 
-    if user.errors.empty?
-      puts "Приглашение отправлено по адресу <#{user.email}> (получатель: #{user.name})"
+      puts "" unless args[:name] && args[:email]
 
-      if Rails.env.development?
-        puts "Invitation token: #{user.invitation_token}"
+      if user.errors.empty?
+        say(" <%= color('Приглашение отправлено по адресу <#{user.email}> (получатель: #{user.name})', :success) %>")
+
+        if Rails.env.development?
+          say(" <%= color('Invitation token: #{user.invitation_token}', :notice) %>")
+        end
+      else
+        user.errors.full_messages.each do |m|
+          say(" <%= color('#{m}', :error) %>")
+        end
       end
-    else
-      user.errors.full_messages.each do |m|
-        puts m
-      end
+    rescue
+      say(" <%= color('#{$!}', :error) %>")
     end
   end
 
@@ -51,6 +60,8 @@ namespace :user do
   end
 
   task :list => [:environment] do
+    extend Hirb::Console
+    
     table(User.all, :fields => [:name, :email, :invitation_sent_at, :created_at, :invitation_token, :invited?])
   end
 
