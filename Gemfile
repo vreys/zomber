@@ -41,5 +41,5 @@ group :cucumber do
 end
 
 group :production do
-  gem 'unicorn', '~> 3.0.0'
+  gem 'unicorn', '~> 3.1.0'
 end
