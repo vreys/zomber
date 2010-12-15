@@ -39,3 +39,7 @@ group :cucumber do
   gem 'database_cleaner', '~> 0.6.0'
   gem 'launchy', '~> 0.3.3'
 end
+
+group :production do
+  gem 'unicorn', '~> 3.0.0'
+end
