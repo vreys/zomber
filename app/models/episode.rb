@@ -8,7 +8,12 @@ class Episode < ActiveRecord::Base
   
   class << self
     def import!(container)
-      create!(container.attributes)
+      attributes = container.attributes
+      
+      attributes[:mp4]  = attributes[:mp4].gsub(REPOS_PATH, '')
+      attributes[:webm] = attributes[:webm].gsub(REPOS_PATH, '')
+
+      create!(attributes)
     end
   end
 
