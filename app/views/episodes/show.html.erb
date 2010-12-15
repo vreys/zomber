@@ -44,7 +44,7 @@
       <% unless @episode.last? %>
         <%= link_to("Следующий эпизод →", serial_episode_path(:episode_index => @episode.next.index)) %>
       <% else %>
-        Слудущий эпизод →
+        Следующий эпизод →
       <% end %>
     </div>
   </div>
