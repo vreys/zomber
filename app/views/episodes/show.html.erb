@@ -25,8 +25,8 @@
 
     
     <video id="player" class="video-js" width="700" height="400" controls="controls">
-      <source src="<%= repository_path(:path => @episode.webm_path) %>" type='video/webm; codecs="vp8, vorbis"' />
-      <source src="<%= repository_path(:path => @episode.mp4_path) %>" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
+      <source src="<%= repo_url(:subdomain => 'repo', :serial_slug => @serial.slug, :season_index => @season.index, :episode_index => @episode.index, :format => 'webm') %>" type='video/webm; codecs="vp8, vorbis"' />
+      <source src="<%= repo_url(:subdomain => 'repo', :serial_slug => @serial.slug, :season_index => @season.index, :episode_index => @episode.index, :format => 'mp4') %>" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
       <source src="<%= request.env['SERVER_NAME'] %>:8082/iphone/playlists<%= repository_path(:path => @episode.mp4_path) %>.m3u8"  />
     </video>
   </div>

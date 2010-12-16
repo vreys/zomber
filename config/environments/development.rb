@@ -1,6 +1,8 @@
 Hdtv::Application.configure do
   # Settings specified here will take precedence over those in config/environment.rb
   config.paths.repos 'public/repos', :load_path => false
+
+  config.session_store :cookie_store, :domain => '.zomber.dev', :key => '_zomber_session'
   
   # In the development environment your application's code is reloaded on
   # every request.  This slows down response time but is perfect for development

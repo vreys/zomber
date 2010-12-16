@@ -149,10 +149,10 @@ Then /^я должен увидеть проигрыватель$/ do
   sources = []
   
   all(:xpath, "//video/source").each do |source|
-     sources << source['src'].match(/\.(mp4|webm)/i)[1]
+     sources << source['src'].match(/.(mp4|webm|m3u8)$/i)[1]
   end
 
-  sources.should include('mp4', 'webm')
+  sources.should include('mp4', 'webm', 'm3u8')
 end
 
 Then /^я должен быть на странице сериала "([^\"]*)"$/ do |serial_title|

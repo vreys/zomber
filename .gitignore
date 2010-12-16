@@ -7,3 +7,4 @@ public/images/posters/*
 public/images/thumbnails/*
 media/repos/*
 public/repos/*
+/config/zomber.nginx.conf

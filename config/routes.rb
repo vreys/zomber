@@ -1,4 +1,8 @@
 Hdtv::Application.routes.draw do
+  constraints :subdomain => 'repo', :format => /(mp4|webm)/, :season_index => /(\d+)/, :episode_index => /(\d+)/ do
+    match ':serial_slug/:season_index/:episode_index.:format' => 'repository#send_video', :as => :repo
+  end
+  
   root :to => 'serials#index'
 
   scope :module => "users" do
