@@ -2,7 +2,6 @@
         server unix:<%= unicorn_socket %> fail_timeout=0;
     }
 
-    # <%= application %> Server
     server {
         listen <%= application_port %>;
         client_max_body_size 500M;
@@ -17,10 +16,6 @@
         root <%= deploy_to %>/current/public;
         access_log <%= shared_path %>/log/nginx.access.log;
         error_log  <%= shared_path %>/log/nginx.error.log;
-
-        location ~ \.mp4$ {
-          mp4;
-        }
 
         # this rewrites all the requests to the maintenance.html
         # page if it exists in the doc root. This is for capistrano's
@@ -71,5 +66,10 @@
         error_page 500 502 503 504 /500.html;
         location = /500.html {
           root <%= deploy_to %>/current/public;
+        }
+
+        location /stream/ {
+          internal;
+          alias <%= zomber_repo_path %>/;
         }
     }

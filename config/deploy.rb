@@ -44,6 +44,10 @@ set :pids_path, "#{shared_path}/pids"
 
 set :unicorn_socket, File.join(sockets_path,'unicorn.sock')
 
+set :zomber_repo_path do
+  File.join(shared_path, 'repos')
+end
+
 namespace :app do
   task :setup, :roles => :app do
     commands = shared_dirs.map do |path|

@@ -11,7 +11,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     'pids'       => "tmp/pids",
     'posters'    => "public/images/posters",
     'thumbnails' => "public/images/thumbnails",
-    'repos'      => "public/repos"
+    'repos'      => "media/repos"
   } unless exists?(:weird_symlinks)
 
   namespace :symlinks do
