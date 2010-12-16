@@ -1,6 +1,6 @@
 Hdtv::Application.configure do
   # Settings specified here will take precedence over those in config/environment.rb
-  config.paths.repos 'public/repos', :load_path => false
+  config.paths.repos 'media/repos', :load_path => false
 
   config.session_store :cookie_store, :domain => '.zomber.tv', :key => '_zomber_session'
   
