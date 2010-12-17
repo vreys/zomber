@@ -10,3 +10,10 @@ After do
   @my_email = ''
   @my_name = ''
 end
+
+After do
+  mails_dir = ActionMailer::Base.file_settings[:location]
+  
+  FileUtils.rm_r(mails_dir) if File.exists?(mails_dir)
+end
+

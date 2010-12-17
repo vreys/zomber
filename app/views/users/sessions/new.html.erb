@@ -1,7 +1,13 @@
 <div class="row">
   <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => 'large'}) do |f| %>
     <div class="inner">
-      <h1>Анонимус детектед</h1>
+      <h1>
+        Анонимус детектед
+
+        <span>
+          <%= link_to 'Забыли пароль?', new_user_password_path %>
+        </span>
+      </h1>
 
       <div class="field_wrap"><%= f.label :email %>
         <%= f.text_field :email, :autocomplete => 'off' %></div>

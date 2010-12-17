@@ -1,0 +1,15 @@
+<div class="row">
+  <%= form_for(@user, :as => 'user', :url => user_password_path, :html => { :method => :post, :class => 'large' }) do |f| %>
+    <div class="inner">
+      <h1>Восстановление пароля</h1>
+      <%= f.hidden_field :reset_password_token %>
+
+      <div class="field_wrap"><%= f.label :email, 'ваш email' %>
+        <%= f.text_field :email, :autocomplete => 'off' %></div>
+
+      <div class="field_wrap">
+        <%= f.submit "Получить дальнейшие инструкции" %>
+      </div>
+    </div>
+  <% end %>
+</div>

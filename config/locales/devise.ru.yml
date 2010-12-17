@@ -6,7 +6,12 @@ ru:
       not_locked: "was not locked"
 
   devise:
+    mailer:
+      reset_password_instructions:
+        subject: 'Восстановление вашего пароля на zomber.tv'
     failure:
       invalid: 'Вы указали неверный email или пароль'
     sessions:
       signed_in: 'Вход выполнен'
+    passwords:
+      updated: "Ваш новый пароль сохранен"

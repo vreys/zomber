@@ -9,4 +9,5 @@ describe User do
   it { should be_a_rememberable }
   it { should be_a_validatable }
   it { should validate_presence_of(:name) }
+  it { should be_a_recoverable }
 end

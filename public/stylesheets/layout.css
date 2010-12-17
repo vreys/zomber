@@ -123,6 +123,15 @@ form.large .field_wrap {
 form.large h1 {
    font-weight: bold;
    font-family: Arial;
+   position: relative;
+}
+
+form.large h1 > span {
+   position: absolute;
+   right: 0;
+   bottom: 0;
+   font-size: 16px;
+   font-weight: normal;
 }
 
 form.large .field_wrap input[type=text],
