@@ -1,7 +1,7 @@
 module EpisodesHelper
   VIDEO_CODECS = {
-    :mp4  => 'avc1.42E01E, mp4a.40.2',
-    :webm => 'vp8, vorbis'
+    :mp4  => 'avc1.42E01E,mp4a.40.2',
+    :webm => 'vp8,vorbis'
   }
   
   def video_source_tag_for_episode(episode, format)
