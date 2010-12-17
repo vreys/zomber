@@ -4,4 +4,4 @@
 # Mime::Type.register "text/richtext", :rtf
 # Mime::Type.register_alias "text/html", :iphone
 Mime::Type.register "video/webm", :webm
-Mime::Type.register "video/h264", :mp4
+Mime::Type.register "video/mp4", :mp4
