@@ -1,4 +1,6 @@
 class Users::InvitationsController < Devise::InvitationsController
+  layout 'light'
+  
   def edit
     @user = User.find_by_invitation_token(params[:invitation_token])
   end
