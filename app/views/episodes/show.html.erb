@@ -15,19 +15,11 @@
   <h1><%= @serial.title %> (<em><%= @serial.alt_title %></em>)</h1>
   <h3><%= @season.index %> сезон, <%= @episode.index %> эпизод</h3>
 
-<!--
-    <video  controls="controls">
-       <source src="repos/lost/season_1/episode_1.mp4" />
-       <source src="http://192.168.0.103:8082/iphone/playlists/lost/season_1/episode_1.mp4.m3u8"  />
-    </video>
--->
   <div class="video-js-box vim-css">
-
-    
     <video id="player" class="video-js" width="700" height="400" controls="controls">
-      <source src="<%= repo_url(:subdomain => 'repo', :serial_slug => @serial.slug, :season_index => @season.index, :episode_index => @episode.index, :format => 'webm') %>" type='video/webm; codecs="vp8, vorbis"' />
-      <source src="<%= repo_url(:subdomain => 'repo', :serial_slug => @serial.slug, :season_index => @season.index, :episode_index => @episode.index, :format => 'mp4') %>" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
-      <source src="<%= request.env['SERVER_NAME'] %>:8082/iphone/playlists<%= repository_path(:path => @episode.mp4_path) %>.m3u8"  />
+      <%= video_source_tag_for_episode(@episode, :mp4) %>
+      <%= video_source_tag_for_episode(@episode, :webm) %>
+      <%= video_source_tag_for_episode(@episode, :m3u8) %>
     </video>
   </div>
 
