@@ -59,3 +59,11 @@ end
 Then /^я должен увидеть свой email в поле "([^\"]*)"$/ do |field_label|
   find_field(field_label)['value'].should eql(user_email)
 end
+
+Given /^я запросил сброс пароля$/ do
+  Given %Q{я не залогинен}
+  When %Q{я захожу на главную страницу}
+  When %Q{я прохожу по ссылке "Забыли пароль?"}
+  When %Q{я ввожу свой email в поле "ваш email"}
+  When %Q{я нажимаю "Получить дальнейшие инструкции"}
+end

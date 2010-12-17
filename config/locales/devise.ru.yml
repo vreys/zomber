@@ -1,7 +1,6 @@
 ru:
   errors:
     messages:
-      not_found: "not found"
       already_confirmed: "was already confirmed"
       not_locked: "was not locked"
 

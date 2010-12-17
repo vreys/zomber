@@ -11,6 +11,9 @@
 # была возможность минимальной локализации приложения на русский язык.
 
 ru:
+  errors:
+    format: "%{message}"
+
   date:
     formats:
       default: "%d.%m.%Y"
@@ -193,10 +196,6 @@ ru:
         odd: "может иметь лишь четное значение"
         even: "может иметь лишь нечетное значение"
         record_invalid: "Возникли ошибки: %{errors}"
-        
-      full_messages:
-        format: "%{attribute} %{message}"
-        
 
   support:
     array:
