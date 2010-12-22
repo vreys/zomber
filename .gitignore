@@ -8,3 +8,5 @@ public/images/thumbnails/*
 media/repos/*
 public/repos/*
 /config/zomber.nginx.conf
+features.*
+features_rcov/
