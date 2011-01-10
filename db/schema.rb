@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110110110015) do
+ActiveRecord::Schema.define(:version => 20110110123846) do
 
   create_table "episodes", :force => true do |t|
     t.integer  "season_id"

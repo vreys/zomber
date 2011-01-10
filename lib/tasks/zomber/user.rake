@@ -49,10 +49,10 @@ namespace :user do
     user = User.find_by_email(email)
 
     if user
-      name = user.name
+      email = user.email
       user.destroy
 
-      puts "#{name} теперь ходит мимо!"
+      puts "#{email} теперь ходит мимо!"
     else
       puts "Таких не знаем -_-"
     end
@@ -61,7 +61,7 @@ namespace :user do
   task :list => [:environment] do
     extend Hirb::Console
     
-    table(User.all, :fields => [:name, :email, :invitation_sent_at, :created_at, :invitation_token, :invited?])
+    table(User.all, :fields => [:login, :email, :invitation_sent_at, :created_at, :invitation_token, :invited?])
   end
 
   task :add => [:environment] do
@@ -70,7 +70,7 @@ namespace :user do
     user = User.new
     
     user.email    = ask(" Электоропочта: ")
-    user.name     = ask("           Имя: ")
+    user.login    = ask("         Логин: ")
     user.password = ask("        Пароль: ") {|p| p.echo = false}
 
     user.save
