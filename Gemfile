@@ -14,6 +14,7 @@ gem 'russian', '~> 0.2.7'
 gem 'capistrano', '~> 2.5.19'
 gem 'dark-capistrano-recipes', '~> 0.6.17'
 gem 'hirb'
+gem 'unicode', '~> 0.4.0'
 
 group :development, :test do
   gem 'mongrel', '~> 1.1.5'

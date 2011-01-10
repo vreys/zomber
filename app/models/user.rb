@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :login, :password, :password_confirmation, :remember_me
 
-  before_validation { |u| u.login = u.login.downcase unless u.login.blank? }
+  before_validation { |u| u.login = Unicode.downcase(u.login) unless u.login.blank? }
   before_validation { |u| u.email = u.email.downcase unless u.login.blank? }
 
   def self.find_for_database_authentication(conditions)

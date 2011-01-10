@@ -1,3 +1,4 @@
+# -*- coding: undecided -*-
 require 'spec_helper'
 
 describe User do
@@ -31,6 +32,12 @@ describe User do
 
     it "should have email in lower case" do
       subject.email.should eql('pupkin.vasily@example.com')
+    end
+
+    it "should have unicode login in lower case" do
+      Factory(:user, :login => 'Василий Рейс')
+
+      User.first.login.should eql('василий рейс')
     end
   end
 
