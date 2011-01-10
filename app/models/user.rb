@@ -11,10 +11,11 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :login, :password, :password_confirmation, :remember_me
 
-  protected
+  before_validation { |u| u.login = u.login.downcase unless u.login.blank? }
+  before_validation { |u| u.email = u.email.downcase unless u.login.blank? }
 
   def self.find_for_database_authentication(conditions)
-    login = conditions.delete(:login)
+    login = conditions.delete(:login).downcase
     where(conditions).where(["login = :value OR email = :value", { :value => login }]).first
   end
 end
