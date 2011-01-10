@@ -23,6 +23,18 @@ def user_email
   @user_email
 end
 
+def set_user_login(value)
+  @user_login = value
+end
+
+def user_login
+  @user_login
+end
+
+def reset_user_login
+  set_user_login("pupkinv")
+end
+
 def reset_user_email
   set_user_email('vasily.pupkin@example.com')
 end
@@ -30,6 +42,7 @@ end
 def reset_user
   reset_user_name
   reset_user_email
+  reset_user_login
 end
 
 Given /^меня зовут "([^\"]*)"$/ do |name|
@@ -44,6 +57,10 @@ Then /^я должен увидеть текстовое поле со свои�
   page.should have_xpath(%Q{//input[@value="#{user_name}"]})
 end
 
+Then /^я должен увидеть текстовое поле со своим логином$/ do
+  page.should have_xpath(%Q{//input[@value="#{user_login}"]})
+end
+
 Then /^я должен увидеть текстовое поле со своим email$/ do
   page.should have_xpath(%Q{//input[@value="#{user_email}"]})
 end
@@ -54,6 +71,10 @@ end
 
 Then /^я должен увидеть свой email$/ do
   Then %Q{я должен увидеть "#{user_email}"}
+end
+
+Then /^я должен увидеть свой логин$/ do
+  Then %Q{я должен увидеть "#{user_login}"}
 end
 
 Then /^я должен увидеть свой email в поле "([^\"]*)"$/ do |field_label|

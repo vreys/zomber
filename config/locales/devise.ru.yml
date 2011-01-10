@@ -9,7 +9,7 @@ ru:
       reset_password_instructions:
         subject: 'Восстановление вашего пароля на zomber.tv'
     failure:
-      invalid: 'Вы указали неверный email или пароль'
+      invalid: 'Вы указали неверный логин или пароль'
     sessions:
       signed_in: 'Вход выполнен'
     passwords:

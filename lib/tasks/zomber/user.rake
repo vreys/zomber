@@ -21,15 +21,14 @@ namespace :user do
     render_header("Приглашение пользователя")
     
     email = args[:name]  ||  ask(" Электопочта получателя: ")
-    name  = args[:email] ||  ask("         Имя получателя: ")
 
     begin
-      user = User.invite!(:email => email, :name => name)
+      user = User.invite!(:email => email)
 
       puts "" unless args[:name] && args[:email]
 
       if user.errors.empty?
-        say(" <%= color('Приглашение отправлено по адресу <#{user.email}> (получатель: #{user.name})', :success) %>")
+        say(" <%= color('Приглашение отправлено по адресу <#{user.email}>', :success) %>")
 
         if Rails.env.development?
           say(" <%= color('Invitation token: #{user.invitation_token}', :notice) %>")
