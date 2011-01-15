@@ -5,6 +5,8 @@ Hdtv::Application.routes.draw do
   
   root :to => 'serials#index'
 
+  match "/feedback" => "feedback#index", :as => 'feedback'
+
   scope :module => "users" do
     devise_for :users,
     :controllers => {

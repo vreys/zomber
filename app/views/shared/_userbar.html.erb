@@ -3,4 +3,8 @@
     <strong><%= current_user.login %></strong> <%= "<#{current_user.email}>" %>
     <%= link_to('Выход', destroy_user_session_path) %>
   <% end %>
+
+  <div>
+    <%= link_to("Место для отзывов, жалоб и предложений", feedback_path) %>
+  </div>
 </div>
