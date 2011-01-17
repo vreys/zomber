@@ -1,12 +1,17 @@
 <% content_for(:menu) do %>
   <a href="<%= root_path %>">Список всех сериалов</a>
 <% end %>
-
 <div class="row">
   <div id="serial_seasons">
     <p><%= @serial.description %></p>
 
     <h1><%= @serial.title %></h1>
     <h2><%= @serial.original_title %></h2>
+
+    <%= render_episodes_index(@serial) %>
+
+    <div class="row">
+      <%= link_to("Добавить #{@serial.seasons.count+1}-й сезон", new_serial_season_path(@serial)) %>
+    </div>
   </div>
 </div>

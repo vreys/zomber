@@ -1,0 +1,9 @@
+<div class="row">
+  <% season_group.each_with_index do |season, index| %>
+    <ul class="fourcol <%= 'last' if (index+1) == season_group.length %>">
+      <li class="season">
+        <h2><%= index+1 %> сезон</h2>
+      </li>
+    </ul>
+  <% end %>
+</div>

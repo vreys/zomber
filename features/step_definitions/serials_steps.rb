@@ -1,22 +1,19 @@
 # -*- coding: utf-8 -*-
-Given /^есть (\d+) разных сериалов$/ do |count_serials|
-  count_serials.to_i.times { RepositoryFactory(:serial) }
-
-  Repository.index!
-end
-
 Then /^я должен увидеть список сериалов$/ do
   page.should have_xpath('//div[@id="serials_grid"]')
 end
 
-Then /^я должен увидеть список из (\d+) сериалов$/ do |count_serials|
-  all('#serials_grid li').count.should eql(count_serials.to_i)
-end
+Given /^есть такой сериал:$/ do |serial_fields|
+  When %Q{я захожу в раздел сериалов}
+  When %Q{я прохожу по ссылке "Добавить сериал"}
+    
+  serial_fields.raw.each do |options|
+    field_label, field_value = *options
+    
+    When %Q{я ввожу "#{field_value}" в поле "#{field_label}"}
+  end
 
-Given /^есть сериал "([^\"]*)"$/ do |serial_title|
-  RepositoryFactory(:serial, :title => serial_title)
-  
-  Repository.index!
+  When %Q{я нажимаю "Добавить сериал"}
 end
 
 Then /^я не должен увидеть список сериалов$/ do
@@ -25,17 +22,8 @@ end
 
 Given /^есть (?:следующие|такие) сериалы:$/ do |serials|
   serials.hashes.each do |serial_fields|
-    When %Q{я захожу в раздел сериалов}
-    When %Q{я прохожу по ссылке "Добавить сериал"}
-    
-    serial_fields.each do |field_label, field_value|
-      When %Q{я ввожу "#{field_value}" в поле "#{field_label}"}
-    end
-
-    When %Q{я нажимаю "Добавить сериал"}
+    Given "есть такой сериал:", table(serial_fields.to_a)
   end
-
-  When %Q{я захожу в раздел сериалов}
 end
 
 Then /^я должен увидеть список сериалов в таком порядке:$/ do |serials_table|
@@ -67,34 +55,6 @@ Then /^я должен увидеть список серий для (\d+) (?:с
   (1..count_seasons.to_i).to_a.each do |index|
     page.should have_content("#{index} сезон")
   end
-end
-
-Given /^есть такой сериал:$/ do |table|
-  attrs = {}
-  seasons = []
-  
-  table.raw.each do |options|
-    unless (options[0] =~ /(\d+) сезон/).nil?
-      seasons.push((options[1].match(/^(\d+)(?:.+)/)[1]).to_i)
-    else
-      attrs[SERIAL_KEY_ALIASES[options[0]]] = options[1]
-    end
-  end
-
-  if seasons.length > 0
-    attrs[:count_seasons] = 0
-  end
-
-  serial_path = RepositoryFactory(:serial, attrs)
-
-  seasons.each_with_index do |count_episodes, season_index|
-    RepositoryFactory(:season,
-                      :serial_repo_path => serial_path,
-                      :index => season_index,
-                      :count_episodes => count_episodes)
-  end
-  
-  Repository.index!
 end
 
 Then /^я должен увидеть список эпизодов$/ do
