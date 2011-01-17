@@ -121,5 +121,5 @@ Then /^я должен (?:быть|оказаться) на странице (\d
 end
 
 Then /^я должен увидеть список эпизодов, состоящий из (\d+)\-го сезона$/ do |expected_seasons_count|
-  
+  all(:xpath, "//div[@id='serial_seasons']/div[@class='row']/ul/li[@class='season']").count.should eql(expected_seasons_count.to_i)
 end
