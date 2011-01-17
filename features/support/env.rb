@@ -54,9 +54,9 @@ ActionController::Base.allow_rescue = false
 # http://github.com/bmabey/database_cleaner for more info.
 
 require 'database_cleaner'
+require 'database_cleaner/cucumber'
 
+DatabaseCleaner.orm = :mongoid
 DatabaseCleaner.strategy = :truncation
-
-Dir[Rails.root.join('test', 'factories', '*.rb')].each {|f| require f}
 
 Dir[Rails.root.join('features', 'step_definitions', '**' '*_steps.rb')].each {|f| require f}
