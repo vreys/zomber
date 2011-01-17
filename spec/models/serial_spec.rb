@@ -5,7 +5,7 @@ describe Serial do
     it "should have id as parameterized original_title" do
       serial = Factory(:serial, :original_title => 'House M.D.')
 
-      serial.id.should eql(serial.title.parameterize)
+      serial.id.should eql(serial.original_title.parameterize)
     end
   end
 end

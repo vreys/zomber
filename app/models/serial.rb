@@ -14,6 +14,6 @@ class Serial
   protected
 
   def set_id
-    self._id = self.title.parameterize
+    self._id = self.original_title.parameterize
   end
 end
