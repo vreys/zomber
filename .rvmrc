@@ -1,0 +1,5 @@
+rvm use --create --install ree-1.8.7-2010.02@zomber > /dev/null 2>&1
+
+if ! command -v bundle ; then
+   gem install bundler
+fi
