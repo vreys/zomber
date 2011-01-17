@@ -1,6 +1,16 @@
 require 'spec_helper'
 
 describe Serial do
+  describe "default scope" do
+    before do
+      5.times{ Factory(:serial) }
+    end
+    
+    it "should return Serials ordered by title ascending" do
+      Serial.all.to_a.should eql(Serial.ascending("title").to_a)
+    end
+  end
+  
   context "after save" do
     it "should have permalink as parameterized original_title" do
       serial = Factory(:serial, :original_title => 'House M.D.')

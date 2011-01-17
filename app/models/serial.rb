@@ -15,6 +15,9 @@ class Serial
   # -- Callbacsk
   before_save :set_id
 
+  # -- Scopes
+  default_scope ascending(:title)
+
   public
 
   # -- Class methods

@@ -1,12 +1,4 @@
 # -*- coding: utf-8 -*-
-SERIAL_KEY_ALIASES = {
-  'название' => :title,
-  'описание' => :description,
-  'количество сезонов' => :count_seasons,
-  'альтернативное название' => :alt_title,
-  'оригинальное название' => :alt_title
-}
-
 Given /^есть (\d+) разных сериалов$/ do |count_serials|
   count_serials.to_i.times { RepositoryFactory(:serial) }
 
@@ -32,17 +24,18 @@ Then /^я не должен увидеть список сериалов$/ do
 end
 
 Given /^есть (?:следующие|такие) сериалы:$/ do |serials|
-  serials.hashes.each do |options|
-    attrs = {}
-
-    options.each do |key, value|
-      attrs[SERIAL_KEY_ALIASES[key]] = value
+  serials.hashes.each do |serial_fields|
+    When %Q{я захожу в раздел сериалов}
+    When %Q{я прохожу по ссылке "Добавить сериал"}
+    
+    serial_fields.each do |field_label, field_value|
+      When %Q{я ввожу "#{field_value}" в поле "#{field_label}"}
     end
 
-    RepositoryFactory(:serial, attrs)
+    When %Q{я нажимаю "Добавить сериал"}
   end
 
-  Repository.index!
+  When %Q{я захожу в раздел сериалов}
 end
 
 Then /^я должен увидеть список сериалов в таком порядке:$/ do |serials_table|
@@ -165,4 +158,8 @@ Then /^я должен (?:быть|оказаться) на странице (\d
   Then %Q{я должен увидеть "#{episode_index} эпизод"}
   Then %Q{я должен увидеть "#{season_index} сезон"}
   Then %Q{я должен увидеть проигрыватель}
+end
+
+Then /^я должен увидеть список эпизодов, состоящий из (\d+)\-го сезона$/ do |expected_seasons_count|
+  
 end
