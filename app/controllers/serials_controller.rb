@@ -1,4 +1,4 @@
-# -*- coding: undecided -*-
+# -*- coding: utf-8 -*-
 class SerialsController < ApplicationController
 #  skip_before_filter :authenticate_user!, :only => [ :index ]
   
@@ -18,6 +18,6 @@ class SerialsController < ApplicationController
   end
 
   def show
-    @serial = Serial.find(params[:id])
+    @serial = Serial.find_by_permalink(params[:id])
   end
 end
