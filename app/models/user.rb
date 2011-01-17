@@ -1,4 +1,6 @@
-class User < ActiveRecord::Base
+class User
+  include Mongoid::Document
+  
   validates_presence_of :login
   validates_uniqueness_of :login
 

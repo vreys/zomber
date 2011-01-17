@@ -1,17 +1,7 @@
-class Season < ActiveRecord::Base
-  belongs_to :serial
-  has_many :episodes, :dependent => :destroy
-  
-  class << self
-    def import!(container)
-      season = create!(container.attributes)
+class Season
+  include Mongoid::Document
 
-      container.episodes.each do |episode_container|
-        season.episodes.import!(episode_container)
-      end
-    end
-  end
+  field :index, :type => Integer
 
-  validates_presence_of :index
-  validates_presence_of :serial_id
+  embedded_in :serial, :inverse_of => :seasons
 end

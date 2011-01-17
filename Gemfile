@@ -15,6 +15,8 @@ gem 'capistrano', '~> 2.5.19'
 gem 'dark-capistrano-recipes', '~> 0.6.17'
 gem 'hirb'
 gem 'unicode', '~> 0.4.0'
+gem "mongoid", "~> 2.0.0.rc.3"
+gem "bson_ext", "~> 1.1.5"
 
 group :development, :test do
   gem 'mongrel', '~> 1.1.5'

@@ -1,6 +1,8 @@
 require File.expand_path('../boot', __FILE__)
 
-require 'rails/all'
+require "action_controller/railtie"
+require "action_mailer/railtie"
+require "active_resource/railtie"
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
@@ -16,8 +18,8 @@ module Hdtv
     config.autoload_paths += %W(#{config.root}/lib)
 
     config.generators do |g|
-      g.test_framework :rspec, :fixture => true, :views => false, :controllers => false
-      g.fixture_replacement :factory_girl
+      g.test_framework :rspec, :fixture => true, :views => false, :controllers => false, :helpers => false
+      g.fixture_replacement :factory_girl, :dir => 'spec/factories'
     end
 
 #    config.action_dispatch.x_sendfile_header = "X-Sendfile"
