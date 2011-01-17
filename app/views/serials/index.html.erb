@@ -1,4 +1,6 @@
 <div id="serials_grid">
+  <%= link_to("Добавить сериал", new_serial_path) %>
+
   <% Serial.all.in_groups_of(4, false) do |group| %>
     <ul class="row">
       <% group.each_with_index do |serial, col_index| %>

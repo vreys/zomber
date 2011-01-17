@@ -30,7 +30,9 @@ Hdtv::Application.routes.draw do
     end
   end
 
-  resources :serials, :only => [:index, :show] do
+  resources :serials do
+#    get ':id', :to => "serials#show", :as => :serial
+    
     match ':season_index/:episode_index' => 'episodes#show', :as => :episode
   end
 

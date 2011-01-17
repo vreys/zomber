@@ -1,0 +1,22 @@
+<div class="row">
+  <%= form_for(Serial.new, :html => {:class => 'large'}) do |f| %>
+    <div class="inner">
+      <h1>
+        Новый сериал
+      </h1>
+
+      <div class="field_wrap"><%= f.label :title, "Название на русском" %>
+        <%= f.text_field :title %></div>
+
+      <div class="field_wrap"><%= f.label :original_title, "Название на английском" %>
+        <%= f.text_field :original_title %></div>
+
+      <div class="field_wrap"><%= f.label :description, "Описание" %>
+        <%= f.text_field :description %></div>
+
+      <div class="field_wrap">
+        <%= f.submit "Добавить сериал" %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,34 +1,12 @@
 <% content_for(:menu) do %>
   <a href="<%= root_path %>">Список всех сериалов</a>
 <% end %>
+
 <div class="row">
-  <div id="serial_seasons" style="background-image: url('<%=  @serial.poster.url%>');">
+  <div id="serial_seasons">
     <p><%= @serial.description %></p>
 
     <h1><%= @serial.title %></h1>
-    <h2><%= @serial.alt_title %></h2>
-
-    <% @serial.seasons.all.in_groups_of(3, false).each do |group| %>
-      <div class="row">
-        <% group.each_with_index do |season, index| %>
-          <ul class="fourcol <%= 'last' if (index+1) == group.length %>">
-            <li class="season">
-              <h2><%= season.index %> сезон</h2>
-              <br/>
-              <ul class="episodes">
-                <% season.episodes.each do |episode| %>
-                  <li>
-                    <%= link_to("#{episode.index} эпизод", 
-                                serial_episode_path(:serial_id => @serial.slug, 
-                                                    :season_index => season.index, 
-                                                    :episode_index => episode.index)) %>
-                  </li>
-                <% end %>
-              </ul>
-            </li>
-          </ul>
-        <% end %>
-      </div>
-    <% end %>
+    <h2><%= @serial.original_title %></h2>
   </div>
 </div>
