@@ -1,0 +1,15 @@
+<ul class="fourcol <%= 'last' if season_counter+1 == seasons_in_row %>">
+  <li class="season">
+    <h2><%= season.index %> сезон</h2>
+
+    <ul>      
+      <%= render :partial => "episode", 
+          :collection => season.episodes, 
+          :locals => {
+            :season => season
+          } %>
+    </ul>
+
+    <%= link_to("Добавить #{season.episodes.count+1}-й эпизод", new_serial_season_episode_path(season.serial, season)) %>
+  </li>
+</ul>

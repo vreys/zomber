@@ -1,20 +1,6 @@
 <div class="row">
-  <% season_group.each_with_index do |season, index| %>
-    <ul class="fourcol <%= 'last' if (index+1) == season_group.length %>">
-      <li class="season">
-        <h2><%= index+1 %> сезон</h2>
-        
-        <ul>
-          <% season.episodes.each do |episode| %>
-            <li>
-              <%= link_to(episode.title, serial_season_episode_path(season.serial, season, episode)) %>
-              <%= episode.original_title %>
-            </li>
-          <% end %>
-        </ul>
-
-        <%= link_to("Добавить #{season.episodes.count+1}-й эпизод", new_serial_season_episode_path(season.serial, season)) %>
-      </li>
-    </ul>
-  <% end %>
+  <%= render :partial => "season", :collection => row_seasons,
+     :locals => {
+        :seasons_in_row => row_seasons.count
+      } %>
 </div>

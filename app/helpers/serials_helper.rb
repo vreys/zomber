@@ -1,8 +1,18 @@
 module SerialsHelper
-  def render_episodes_index(serial)
-    season_groups = serial.seasons.all.in_groups_of(3, false)
+  SEASON_COLS_IN_ROW = 3
+  
+  def render_index_of_episodes(serial)
+    output = []
     
-    render :partial => "serials/seasons_row",
-    :collection => season_groups, :as => :season_group
+    serial.seasons.all.in_groups_of(SEASON_COLS_IN_ROW, false).each_with_index do |row_seasons, row_index|
+      row_counter = row_index+1
+
+      output << render(:partial => "seasons_row", :locals => {
+                         :row_counter => row_counter,
+                         :row_seasons => row_seasons
+                       })
+    end
+
+    output.join.html_safe
   end
 end
