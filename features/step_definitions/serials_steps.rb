@@ -1,4 +1,41 @@
 # -*- coding: utf-8 -*-
+def get_season_xpath(season_index)
+  season_index = season_index.to_i
+
+  row = 1
+  col = 1
+
+  if season_index%3 > 0
+    col = season_index%3
+    row = (season_index-col)/3
+    row |= 1
+  else
+    row = season_index/3
+  end
+  
+  "//div[@id='serial_seasons']/div[@class='row'][#{row}]/ul/li[@class='season'][#{col}]"
+end
+
+def get_episode_xpath(season_index, episode_index)
+  get_season_xpath(season_index) + "/ul/li[#{episode_index}]"
+end
+
+def within_season_xpath(season_index) 
+  season_xpath = get_season_xpath(season_index)
+
+  within(:xpath, season_xpath) do
+    yield
+  end
+end
+
+def within_episode_xpath(season_index, episode_index)
+  episode_xpath = get_episode_xpath(season_index, episode_index)
+  
+  within(:xpath, episode_xpath) do
+    yield
+  end
+end
+
 Then /^я должен увидеть список сериалов$/ do
   page.should have_xpath('//div[@id="serials_grid"]')
 end
@@ -74,22 +111,9 @@ Then /^я должен увидеть такой список сезонов:$/ 
   end
 end
 
-When /^я перехожу по ссылке "([^\"]*)" (?:во|в) (\d+) сезоне$/ do |episode, season_index|
-  season_index = season_index.to_i
-
-  row = 1
-  col = 1
-
-  if season_index%3 > 0
-    col = season_index%3
-    row = (season_index-col)/3
-    row = 1 if row < 1
-  else
-    row = season_index/3
-  end
-  
-  within(:xpath, "//div[@id='serial_seasons']/div[#{row}]/ul[#{col}]/li") do
-    click_link(episode)
+When /^я (?:перехожу|прохожу) по ссылке "([^\"]*)" (?:во|в) (\d+)\-м сезоне$/ do |link_text, season_index|
+  within_season_xpath(season_index) do
+    click_link(link_text)
   end
 end
 
@@ -122,4 +146,22 @@ end
 
 Then /^я должен увидеть список эпизодов, состоящий из (\d+)\-го сезона$/ do |expected_seasons_count|
   all(:xpath, "//div[@id='serial_seasons']/div[@class='row']/ul/li[@class='season']").count.should eql(expected_seasons_count.to_i)
+end
+
+Then /^я должен увидеть в (\d+)\-м сезоне (\d+)\-й эпизод с ссылкой "([^\"]*)"$/ do |season_index, episode_index, link_text|
+  within_episode_xpath(season_index, episode_index) do
+    page.should have_link(link_text)
+  end
+end
+
+Then /^я должен увидеть в (\d+)\-м сезоне (\d+)\-й эпизод с текстом "([^\"]*)"$/ do |season_index, episode_index, text|
+  within_episode_xpath(season_index, episode_index) do
+    page.should have_content(text)
+  end
+end
+
+Then /^я должен увидеть в (\d+)\-м сезоне ссылку "([^\"]*)"$/ do |season_index, link_text|
+  within_season_xpath(season_index) do
+    page.should have_link(link_text)
+  end
 end

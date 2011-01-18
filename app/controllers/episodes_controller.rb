@@ -1,7 +1,27 @@
+# -*- coding: utf-8 -*-
 class EpisodesController < ApplicationController
-  def show
-    @serial = Serial.find_by_slug(params[:serial_id])
-    @season = @serial.seasons.where(:index => params[:season_index]).first
-    @episode = @season.episodes.where(:index => params[:episode_index]).first
+  before_filter :define_resources
+  
+  def new
+    @episode = @season.episodes.build
+  end
+
+  def create
+    @episode = @season.episodes.create(params[:episode])
+    @episode.save!
+
+    @season.episodes << @episode
+    @season.save!
+
+    flash[:success] = "Добавлен #{@season.index}-й эпизод в #{@season.index}-й сезон"
+
+    redirect_to serial_path(@serial)
+  end
+
+  protected
+
+  def define_resources
+    @serial = Serial.find_by_permalink(params[:serial_id])
+    @season = @serial.seasons.find_by_index(params[:season_id])    
   end
 end

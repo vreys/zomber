@@ -1,0 +1,19 @@
+<div class="row">
+  <%= form_for(@episode, :url => serial_season_episodes_path(@serial, @season), :html => {:class => 'large'}) do |f| %>
+    <div class="inner">
+      <h1>
+        <%= "«#{@serial.title}» (#{@season.index}-й сезон, #{@episode.index}-й эпизод)" %>
+      </h1>
+
+      <div class="field_wrap"><%= f.label :title, "Название на русском" %>
+        <%= f.text_field :title %></div>
+
+      <div class="field_wrap"><%= f.label :original_title, "Название на английском" %>
+        <%= f.text_field :original_title %></div>
+
+      <div class="field_wrap">
+        <%= f.submit "Добавить эпизод" %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -33,7 +33,9 @@ Hdtv::Application.routes.draw do
   end
 
   resources :serials do
-    resources :seasons
+    resources :seasons do
+      resources :episodes
+    end
   end
 
   match 'repos*path' => 'nowhere#imposible', :as => 'repository'

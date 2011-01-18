@@ -1,34 +1,61 @@
 require 'spec_helper'
 
 describe Season do
-  describe "validations" do
-    it { should validate_presence_of(:index) }
-    it { should validate_presence_of(:serial_id) }
-  end
-
-  describe "relations" do
-    it { should belong_to(:serial) }
-    it { should have_many(:episodes, :dependent => :destroy) }
-  end
-
-  describe "#import" do
+  describe "#index" do
     before do
-      @season_container = ContainerFactory(:season)
+      serial = Factory(:serial)
+      2.times{ serial.seasons << Factory(:season) }
+      serial.save!
+      
+      @season = serial.seasons.last
+    end
+
+    subject{ @season.index }
+
+    it "should return index of a Season" do
+      subject.should eql(2)
+    end
+  end
+
+  describe "#to_param" do
+    before do
+      serial = Factory(:serial)
+      3.times{ serial.seasons << Factory(:season) }
+      serial.save!
+      
+      @season = serial.seasons.last
+    end
+    
+    subject { @season.to_param }
+    
+    it "should return index of a Season as a String" do
+      subject.should eql(@season.index.to_s)
+    end
+  end
+
+  describe "#find_by_index" do
+    before do
       @serial = Factory(:serial)
+      3.times { @serial.seasons << Factory(:season) }
+
+      @requested_index = 3
+      @expected_season = @serial.seasons.last
     end
 
-    it "should create Season with proper attributes" do
-      lambda { @serial.seasons.import!(@season_container) }.should change(@serial.seasons, :count).from(0).to(1)
+    context "when passed index as Integer" do
+      subject{ @serial.seasons.find_by_index(@requested_index.to_i) }
 
-      @serial.seasons.first.index.should eql(@season_container.attributes[:index])
-    end
-
-    it "should import Episodes" do
-      @season_container.episodes.each do |episode_container|
-        Episode.stubs(:import!).with(episode_container).once
+      it "should return Season" do
+        subject.should eql(@expected_season)
       end
+    end
 
-      @serial.seasons.import!(@season_container)
+    context "when passed index as String" do
+      subject{ @serial.seasons.find_by_index(@requested_index.to_s) }
+
+      it "should return Season" do
+        subject.should eql(@expected_season)
+      end
     end
   end
 end

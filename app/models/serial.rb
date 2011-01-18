@@ -2,6 +2,7 @@ class Serial
   include Mongoid::Document
 
   # -- Document configuration
+  
   identity :type => String
   
   field :title
@@ -10,17 +11,21 @@ class Serial
   field :permalink
 
   # -- Accociations
+  
   embeds_many :seasons
 
   # -- Callbacsk
+  
   before_save :set_id
 
   # -- Scopes
+  
   default_scope ascending(:title)
 
   public
 
   # -- Class methods
+  
   class << self
     def find_by_permalink(value)
       self.where(:permalink => value).first
@@ -28,6 +33,7 @@ class Serial
   end
 
   # -- Instance methods
+  
   def to_param
     self.permalink
   end
