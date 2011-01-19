@@ -70,7 +70,7 @@ When /^я добавляю (\d+)\-й эпизод (\d+)\-го сезона с т
   When %Q{я нажимаю "Добавить эпизод"}
 end
 
-Then /^я должен увидеть (\d+) эпизодов в (\d+)\-м сезоне$/ do |count_episodes, season_index|
+Then /^я должен увидеть (\d+) (?:эпизодов|эпизода) в (\d+)\-м сезоне$/ do |count_episodes, season_index|
   count_episodes_in_season(season_index).should eql(count_episodes.to_i)
 end
 

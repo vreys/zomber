@@ -30,4 +30,11 @@ module SerialsHelper
     
     button_to(text, url, :method => :get)
   end
+
+  def render_destroy_season_button(season)
+    text = "удалить сезон"
+    url  = serial_season_path(season.serial, season)
+
+    button_to(text, url, :method => :delete)
+  end
 end

@@ -15,7 +15,14 @@ Given /^есть такой сериал:$/ do |serial_options|
   end
 
   serial_seasons.sort!{|x,y| x[0] <=> y[0]} unless serial_seasons.empty?
-    
+
+  serial_meta = Hash[*serial_meta.flatten]
+  
+  serial_meta = {
+    "Название на английском" => Russian.transliterate(serial_meta["Название на русском"]),
+    "Описание"               => Faker::Lorem.sentences(8).join(" ")
+  }.merge(serial_meta).to_a
+  
   serial_meta.each do |metas|
     meta_name, meta_value = *metas
     
