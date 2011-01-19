@@ -59,4 +59,5 @@ require 'database_cleaner/cucumber'
 DatabaseCleaner.orm = :mongoid
 DatabaseCleaner.strategy = :truncation
 
-Dir[Rails.root.join('features', 'step_definitions', '**' '*_steps.rb')].each {|f| require f}
+Dir[Rails.root.join('features', '**', 'steps', '*_steps.rb')].each {|f| require f}
+Dir[Rails.root.join('features', '**', 'support', '*.rb')].each {|f| require f}
