@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module EpisodesHelper
   VIDEO_CODECS = {
     :mp4  => 'avc1.42E01E,mp4a.40.2',
@@ -29,5 +30,11 @@ module EpisodesHelper
 
   def erlyviedo_url(file_path)
     "http://#{request.env['SERVER_NAME']}:8082/iphone/playlists#{file_path}.m3u8"
+  end
+
+  def render_episode_form_commit_button(episode, form)
+    text = (episode.new_record? ? "Добавить эпизод" : "Сохранить")
+    
+    form.submit text
   end
 end

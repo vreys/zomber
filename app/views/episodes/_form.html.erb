@@ -1,0 +1,17 @@
+<%= form_for([@serial, @season, @episode], :html => {:class => 'large'}) do |f| %>
+  <div class="inner">
+    <h1>
+      <%= "«#{@serial.title}» (#{@season.index}-й сезон, #{@episode.index}-й эпизод)" %>
+    </h1>
+
+    <div class="field_wrap"><%= f.label :title, "Название на русском" %>
+      <%= f.text_field :title %></div>
+
+    <div class="field_wrap"><%= f.label :original_title, "Название на английском" %>
+      <%= f.text_field :original_title %></div>
+
+    <div class="field_wrap">
+      <%= render_episode_form_commit_button(@episode, f) %>
+    </div>
+  </div>
+<% end %>

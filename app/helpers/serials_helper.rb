@@ -1,5 +1,5 @@
 module SerialsHelper
-  SEASON_COLS_IN_ROW = 3
+  SEASON_COLS_IN_ROW = 2
   
   def render_index_of_episodes(serial)
     output = []

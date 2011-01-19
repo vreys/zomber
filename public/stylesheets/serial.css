@@ -112,10 +112,13 @@
    border-radius: 8px;
    -moz-border-radius: 8px;
    -webkit-border-radius: 8px;
+   padding-left: 40px;
 }
 
 #serial_seasons ul li .episodes li {
    line-height: 2em;
+   padding-left: 20px;
+   list-style-type: decimal-leading-zero;
 }
 
 #serial_seasons ul li .episodes li a {

@@ -179,13 +179,19 @@ Then /^я должен увидеть список эпизодов, состо�
   all(:xpath, "//div[@id='serial_seasons']/div[@class='row']/ul/li[@class='season']").count.should eql(expected_seasons_count.to_i)
 end
 
-Then /^я должен увидеть в (\d+)\-м сезоне (\d+)\-й эпизод с ссылкой "([^\"]*)"$/ do |season_index, episode_index, link_text|
+When /^я прохожу по ссылке "([^\"]*)" в (\d+)\-м эпизоде (\d+)\-го сезона$/ do |link, episode_index, season_index|
   within_episode_xpath(season_index, episode_index) do
-    page.should have_link(link_text)
+    click_link(link)
   end
 end
 
-Then /^я должен увидеть в (\d+)\-м сезоне (\d+)\-й эпизод с текстом "([^\"]*)"$/ do |season_index, episode_index, text|
+Then /^я должен увидеть ссылку "([^\"]*)" в (\d+)\-м эпизоде (\d+)\-го сезона$/ do |link, episode_index, season_index|
+  within_episode_xpath(season_index, episode_index) do
+    page.should have_link(link)
+  end
+end
+
+Then /^я должен увидеть "([^\"]*)" в (\d+)\-м эпизоде (\d+)\-го сезона$/ do |text, episode_index, season_index|
   within_episode_xpath(season_index, episode_index) do
     page.should have_content(text)
   end
