@@ -1,6 +1,9 @@
-<ul class="fourcol <%= 'last' if season_counter+1 == seasons_in_row %>">
+<ul class="sixcol <%= 'last' if season_counter+1 == seasons_in_row %>">
   <li class="season">
-    <h2><%= season.index %> сезон</h2>
+    <h2>
+      <%= season.index %> сезон
+      <%= render_new_episode_in_season_button(season) %>
+    </h2>
     <br/>
     
     <% if season.episodes.count > 0 %>
@@ -13,7 +16,5 @@
       </ul>
       <br/>
     <% end %>
-
-    <%= link_to("Добавить #{season.episodes.count+1}-й эпизод", new_serial_season_episode_path(season.serial, season)) %>
   </li>
 </ul>

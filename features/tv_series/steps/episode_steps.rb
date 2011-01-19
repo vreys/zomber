@@ -7,7 +7,7 @@ end
 
 Given /^(\d+)\-й сезон сериала "([^\"]*)" состоит из таких эпизодов:$/ do |season_index, serial_title, episodes|
   When %Q{я захожу на страницу сериала "#{serial_title}"}
-  When %Q{я прохожу по ссылке "Добавить #{season_index}-й сезон"}
+  When %Q{я нажимаю кнопку "Добавить #{season_index}-й сезон"}
 
   episodes.hashes.each_with_index do |episode, index|
     When %Q{я добавляю #{index+1}-й эпизод #{season_index}-го сезона с таким содержанием:}, table(episode.to_a)
@@ -17,6 +17,12 @@ end
 When /^я (?:перехожу|прохожу) по ссылке "([^\"]*)" (?:во|в) (\d+)\-м сезоне$/ do |link_text, season_index|
   within_season_xpath(season_index) do
     click_link(link_text)
+  end
+end
+
+Given /^я нажимаю кнопку "([^\"]*)" в (\d+)\-м сезоне$/ do |button, season_index|
+  within_season_xpath(season_index) do
+    click_button(button)
   end
 end
 
@@ -42,20 +48,20 @@ Then /^я должен увидеть ссылку "([^\"]*)" в (\d+)\-м эп�
   end
 end
 
+Then /^я должен увидеть кнопку "([^\"]*)" в (\d+)\-м сезоне$/ do |button, season_index|
+  within_season_xpath(season_index) do
+    page.should have_button(button)
+  end
+end
+
 Then /^я должен увидеть "([^\"]*)" в (\d+)\-м эпизоде (\d+)\-го сезона$/ do |text, episode_index, season_index|
   within_episode_xpath(season_index, episode_index) do
     page.should have_content(text)
   end
 end
 
-Then /^я должен увидеть в (\d+)\-м сезоне ссылку "([^\"]*)"$/ do |season_index, link_text|
-  within_season_xpath(season_index) do
-    page.should have_link(link_text)
-  end
-end
-
 When /^я добавляю (\d+)\-й эпизод (\d+)\-го сезона с таким содержанием:$/ do |episode_index, season_index, fields|
-  When %Q{я прохожу по ссылке "Добавить #{episode_index}-й эпизод" в #{season_index}-м сезоне}
+  When %Q{я нажимаю кнопку "Добавить #{episode_index}-й эпизод" в #{season_index}-м сезоне}
 
   Hash[*fields.raw.flatten].each_pair do |field_label, field_value|
     When %Q{я ввожу "#{field_value}" в поле "#{field_label}"}

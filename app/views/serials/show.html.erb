@@ -11,7 +11,7 @@
     <%= render_index_of_episodes(@serial) %>
 
     <div class="row">
-      <%= link_to("Добавить #{@serial.seasons.count+1}-й сезон", new_serial_season_path(@serial)) %>
+      <%= render_new_season_button(@serial) %>
     </div>
   </div>
 </div>

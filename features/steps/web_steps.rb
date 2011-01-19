@@ -49,7 +49,7 @@ When /^я ввожу "([^\"]*)" в поле "([^\"]*)"$/ do |value, field|
   fill_in(field, :with => value)
 end
 
-When /^я нажимаю "([^\"]*)"$/ do |button|
+When /^я (?:нажимаю|нажимаю кнопку) "([^\"]*)"$/ do |button|
   click_button(button)
 end
 

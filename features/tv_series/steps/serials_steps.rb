@@ -28,14 +28,14 @@ Given /^есть такой сериал:$/ do |serial_options|
     season_index   = season[0].match(/^(\d+)/)[1].to_i
     count_episodes = season[1].match(/^(\d+)/)[1].to_i
     
-    When %Q{я прохожу по ссылке "Добавить #{season_index}-й сезон"}
+    When %Q{я нажимаю кнопку "Добавить #{season_index}-й сезон"}
     
     count_episodes.times.to_a.each do |i|
       episode_index = i+1
 
       episode_title = Faker::Lorem.words(3).join(" ")
 
-      When %Q{я прохожу по ссылке "Добавить #{episode_index}-й эпизод" в #{season_index}-м сезоне}
+      When %Q{я нажимаю кнопку "Добавить #{episode_index}-й эпизод" в #{season_index}-м сезоне}
       When %Q{я ввожу "#{episode_title}" в поле "Название на русском"}
       When %Q{я ввожу "#{episode_title}" в поле "Название на английском"}
       When %Q{я нажимаю "Добавить эпизод"}
