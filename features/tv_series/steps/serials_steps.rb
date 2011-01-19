@@ -43,6 +43,16 @@ Given /^есть такой сериал:$/ do |serial_options|
   end
 end
 
+Given /^есть сериал "([^\"]*)"$/ do |serial_title|
+  serial_fields = {
+    "Название на русском"    => serial_title,
+    "Название на английском" => Russian.transliterate(serial_title),
+    "Описание"               => Faker::Lorem.sentences(8).join(" ")
+  }
+
+  Given "есть такой сериал:", table(serial_fields.to_a)
+end
+
 Given /^есть (?:следующие|такие) сериалы:$/ do |serials|
   serials.hashes.each do |serial_fields|
     Given "есть такой сериал:", table(serial_fields.to_a)

@@ -34,3 +34,9 @@ def within_episode_xpath(season_index, episode_index)
     yield
   end
 end
+
+def count_episodes_in_season(season_index)
+  within_season_xpath(season_index) do
+    all(:xpath, "ul[@class='episodes']/li").count
+  end
+end

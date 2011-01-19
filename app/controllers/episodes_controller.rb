@@ -22,6 +22,16 @@ class EpisodesController < ApplicationController
     redirect_to_serial_page
   end
 
+  def destroy
+    episode_title = @episode.title
+
+    @episode.destroy
+
+    flash[:success] = "Эпизод «#{episode_title}» удален"
+
+    redirect_to_serial_page
+  end
+
   protected
 
   def define_parent_resources
