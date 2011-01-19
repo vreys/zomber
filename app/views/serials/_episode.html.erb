@@ -2,6 +2,6 @@
   <%= link_to(episode.title, serial_season_episode_path(season.serial, season, episode)) %>
   <%= episode.original_title %>
 
-  <%= link_to("Изменить", edit_serial_season_episode_path(season.serial, season, episode)) %>
+  <%= button_to("изменить", edit_serial_season_episode_path(season.serial, season, episode), :method => :get) %>
   <%= button_to("удалить", serial_season_episode_path(season.serial, season, episode), :method => :delete) %>
 </li>

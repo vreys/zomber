@@ -30,7 +30,7 @@ When /^я прохожу по ссылке "([^\"]*)" (?:в|во) (\d+)\-м эп
   end
 end
 
-When /^я нажимаю кнопку "([^\"]*)" во (\d+)\-м эпизоде (\d+)\-го сезона$/ do |button, episode_index, season_index|
+When /^я нажимаю кнопку "([^\"]*)" (?:во|в) (\d+)\-м эпизоде (\d+)\-го сезона$/ do |button, episode_index, season_index|
   within_episode_xpath(season_index, episode_index) do
     click_button(button)
   end
