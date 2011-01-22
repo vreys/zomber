@@ -31,6 +31,7 @@ group :development, :test do
   gem 'remarkable_activerecord', '~> 4.0.0.alpha4'
   gem 'remarkable_devise', '~> 1.0.0'
   gem 'remarkable_devise_invitable', '~> 1.0.0'
+  gem 'remarkable_mongoid', '~> 0.5.0'
   gem 'rcov', '0.9.9'
 end
 

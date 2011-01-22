@@ -2,16 +2,16 @@
   <a href="<%= root_path %>">Список всех сериалов</a>
 <% end %>
 <div class="row">
-  <div id="serial_seasons">
+  <div id="serial_seasons" style="background-image: url('/images/poster2.jpg');">
     <p><%= @serial.description %></p>
+
+    <div class="row">
+      <%= render_new_season_button(@serial) %>
+    </div>
 
     <h1><%= @serial.title %></h1>
     <h2><%= @serial.original_title %></h2>
 
     <%= render_index_of_episodes(@serial) %>
-
-    <div class="row">
-      <%= render_new_season_button(@serial) %>
-    </div>
   </div>
 </div>

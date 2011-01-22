@@ -1,7 +1,7 @@
 <%= form_for([@serial, @season, @episode], :html => {:class => 'large'}) do |f| %>
   <div class="inner">
     <h1>
-      <%= "«#{@serial.title}» (#{@season.index}-й сезон, #{@episode.index}-й эпизод)" %>
+      <%= "«#{@serial.title}» (#{@season.index_number}-й сезон, #{@episode.index}-й эпизод)" %>
     </h1>
 
     <div class="field_wrap"><%= f.label :title, "Название на русском" %>

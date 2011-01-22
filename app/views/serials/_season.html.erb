@@ -1,9 +1,10 @@
 <ul class="sixcol <%= 'last' if season_counter+1 == seasons_in_row %>">
   <li class="season">
     <h2>
-      <%= season.index %> сезон
+      <%= season.index_number %> сезон
       <%= render_new_episode_in_season_button(season) %>
       <%= render_destroy_season_button(season) %>
+      <%= render_season_down_button(season) %>
     </h2>
     <br/>
     

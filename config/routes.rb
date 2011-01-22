@@ -34,6 +34,8 @@ Hdtv::Application.routes.draw do
 
   resources :serials do
     resources :seasons do
+      put "down", :on => :member
+      
       resources :episodes
     end
   end

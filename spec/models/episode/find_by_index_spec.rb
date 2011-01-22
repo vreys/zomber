@@ -3,7 +3,7 @@ require "spec_helper"
 describe Episode, "#find_by_index" do
   before do
     @season = Factory(:season)
-    3.times{ @season.episodes << Factory(:episode) }
+    3.times{ Factory(:episode, :season => @season) }
 
     @request_index = 2
     @expected_episode = @season.episodes.at(@request_index-1)

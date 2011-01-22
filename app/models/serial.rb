@@ -10,9 +10,15 @@ class Serial
   field :description
   field :permalink
 
+  index :permalink, :unique => true
+
   # -- Accociations
   
-  embeds_many :seasons
+  embeds_many :seasons do
+    def find_by_index_number(value)
+      @target.select{ |season| season.index_number == value.to_i }.first
+    end
+  end
 
   # -- Callbacsk
   

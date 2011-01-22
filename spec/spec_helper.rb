@@ -3,8 +3,7 @@ ENV["RAILS_ENV"] ||= 'test'
 
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-require 'paperclip/matchers'
-require 'remarkable/active_record'
+require "remarkable/mongoid"
 require 'remarkable/devise'
 require 'remarkable/devise/invitable'
 require 'database_cleaner'
@@ -17,8 +16,6 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 Dir[Rails.root.join("spec/factories/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
-  config.include Paperclip::Shoulda::Matchers
-
   config.include Devise::TestHelpers, :type => :controller
   
   # == Mock Framework
@@ -59,4 +56,8 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
+end
+
+def no_more_than(count)
+  (rand(count) + 1)
 end

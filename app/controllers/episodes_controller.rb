@@ -6,7 +6,7 @@ class EpisodesController < ApplicationController
   before_filter :update_episode_attributes, :only => [:create, :update]
   
   def create
-    flash[:success] = "Добавлен #{@season.index}-й эпизод в #{@season.index}-й сезон"
+    flash[:success] = "Добавлен #{@episode.index}-й эпизод в #{@season.index_number}-й сезон"
 
     redirect_to_serial_page
   end
@@ -17,7 +17,7 @@ class EpisodesController < ApplicationController
   end
 
   def update
-    flash[:success] = "#{@episode.index}-й эпизод в #{@season.index}-м сезоне обнавлен"
+    flash[:success] = "#{@episode.index}-й эпизод в #{@season.index_number}-м сезоне обнавлен"
 
     redirect_to_serial_page
   end
@@ -36,7 +36,7 @@ class EpisodesController < ApplicationController
 
   def define_parent_resources
     @serial = Serial.find_by_permalink(params[:serial_id])
-    @season = @serial.seasons.find_by_index(params[:season_id])
+    @season = @serial.seasons.find_by_index_number(params[:season_id])
   end
 
   def build_episode_resource

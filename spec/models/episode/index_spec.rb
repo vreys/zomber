@@ -4,7 +4,7 @@ describe Episode, "#index" do
   before do
     @season = Factory(:season)
     @count_episodes = 5
-    @count_episodes.times{ @season.episodes << Factory(:episode) }
+    @count_episodes.times{ Factory(:episode, :season => @season) }
 
     @episode = @season.episodes.last
   end

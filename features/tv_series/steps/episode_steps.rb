@@ -20,19 +20,25 @@ When /^я (?:перехожу|прохожу) по ссылке "([^\"]*)" (?:в
   end
 end
 
-Given /^я нажимаю кнопку "([^\"]*)" в (\d+)\-м сезоне$/ do |button, season_index|
+Given /^я нажимаю кнопку "([^\"]*)" (?:в|во) (\d+)\-м сезоне$/ do |button, season_index|
   within_season_xpath(season_index) do
     click_button(button)
   end
 end
 
 Then /^я должен увидеть список эпизодов, состоящий из (\d+)\-(?:го|х) сезона$/ do |expected_seasons_count|
-  all(:xpath, "//div[@id='serial_seasons']/div[@class='row']/ul/li[@class='season']").count.should eql(expected_seasons_count.to_i)
+  all(:xpath, "//div[@id='serial_seasons']/div[@class='seasons row']/ul/li[@class='season']").count.should eql(expected_seasons_count.to_i)
 end
 
 When /^я прохожу по ссылке "([^\"]*)" (?:в|во) (\d+)\-м эпизоде (\d+)\-го сезона$/ do |link, episode_index, season_index|
   within_episode_xpath(season_index, episode_index) do
     click_link(link)
+  end
+end
+
+When /^я нажимаю кнопку понижения номера (\d+)\-го сезона$/ do |season_index|
+  within_season_xpath(season_index) do
+    click_button("season_#{season_index}_down_button")
   end
 end
 
@@ -70,7 +76,7 @@ When /^я добавляю (\d+)\-й эпизод (\d+)\-го сезона с т
   When %Q{я нажимаю "Добавить эпизод"}
 end
 
-Then /^я должен увидеть (\d+) (?:эпизодов|эпизода) в (\d+)\-м сезоне$/ do |count_episodes, season_index|
+Then /^я должен увидеть (\d+) (?:эпизодов|эпизода) (?:в|во) (\d+)\-м сезоне$/ do |count_episodes, season_index|
   count_episodes_in_season(season_index).should eql(count_episodes.to_i)
 end
 

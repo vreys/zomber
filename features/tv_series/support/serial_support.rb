@@ -12,7 +12,7 @@ def get_season_xpath(season_index)
     col = season_index / row
   end
   
-  "//div[@id='serial_seasons']/div[@class='row'][#{row}]/ul[#{col}]/li[@class='season']"
+  "//div[@id='serial_seasons']/div[@class='seasons row'][#{row}]/ul[#{col}]/li[@class='season']"
 end
 
 def get_episode_xpath(season_index, episode_index)
