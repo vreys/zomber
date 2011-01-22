@@ -430,6 +430,7 @@ VideoJS.player.extend({
       this.loadInterface(); // Show everything once styles are loaded
       this.getSubtitles();
       document.addEventListener("keydown", this.fullscreenOnF11Key.context(this), false);
+      document.addEventListener("keydown", this.onSpacePress.context(this), false);
     }
   },
   /* Source Managemet
@@ -1099,6 +1100,21 @@ VideoJS.player.newBehavior("playToggle", function(element){
       } else {
         this.pause();
       }
+    }
+  }
+);
+
+VideoJS.player.newBehavior("playToggleKey", function(element){
+    _V_.addListener(element, "keydown", this.onSpacePress.context(this));
+  },{
+    onSpacePress: function(event){
+       if (event.keyCode == 32) {
+        if (this.paused()) {
+          this.play();
+        } else {
+          this.pause();
+        }
+       }
     }
   }
 );
