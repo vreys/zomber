@@ -39,10 +39,16 @@ module SerialsHelper
   end
 
   def render_season_down_button(season)
-    text = "Сделать #{season.index_number-1}-м сезоном"
     id   = "season_#{season.index_number}_down_button"
     url  = down_serial_season_path(season.serial, season)
 
     button_to("down", url, :id => id, :method => :put)
+  end
+
+  def render_season_up_button(season)
+    id   = "season_#{season.index_number}_up_button"
+    url  = up_serial_season_path(season.serial, season)
+
+    button_to("up", url, :id => id, :method => :put)
   end
 end

@@ -43,6 +43,17 @@ class Season
     self.save and prev.save
   end
 
+  def increase_index_number!
+    return if self.last?
+
+    nxt = self.next
+
+    self.safely.inc(:index_number, 1)
+    nxt.safely.inc(:index_number, -1)
+
+    self.save and nxt.save
+  end
+
   def previous
     self.serial.seasons.find_by_index_number(self.index_number - 1) unless first?
   end

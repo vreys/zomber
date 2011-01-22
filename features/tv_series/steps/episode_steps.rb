@@ -42,6 +42,12 @@ When /^я нажимаю кнопку понижения номера (\d+)\-г�
   end
 end
 
+When /^я нажимаю кнопку повышения номера (\d+)\-го сезона$/ do |season_index|
+  within_season_xpath(season_index) do
+    click_button("season_#{season_index}_up_button")
+  end
+end
+
 When /^я нажимаю кнопку "([^\"]*)" (?:во|в) (\d+)\-м эпизоде (\d+)\-го сезона$/ do |button, episode_index, season_index|
   within_episode_xpath(season_index, episode_index) do
     click_button(button)

@@ -28,6 +28,14 @@ class SeasonsController < ApplicationController
     redirect_to_serial_page and return
   end
 
+  def up
+    @season.increase_index_number!
+
+    flash[:success] = "#{@season.previous.index_number}-й и #{@season.index_number}-й сезоны поменяны местами"
+
+    redirect_to_serial_page and return
+  end
+
   protected
 
   def define_serial_resource
