@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/stylesheets/mobile.css" media="handheld, only screen and (max-width: 767px)" />
     <!-- Put your layout here -->
     <link rel="stylesheet" href="/stylesheets/layout.css" type="text/css" media="screen" />
+    <%= yield :header_includes %>
 
     <%= stylesheet_link_tag 'serial' %>
     <%= csrf_meta_tag %>

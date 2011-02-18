@@ -1,6 +1,13 @@
 <% content_for(:menu) do %>
   <a href="<%= root_path %>">Список всех сериалов</a>
 <% end %>
+
+
+<% content_for(:header_includes) do %>
+  <%= auto_discovery_link_tag :rss, serial_url(:id => @serial, :format => 'rss') %>
+<% end %>
+
+
 <div class="row">
   <div id="serial_seasons" style="background-image: url('<%=  @serial.poster.url%>');">
     <p><%= @serial.description %></p>

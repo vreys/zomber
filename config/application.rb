@@ -8,6 +8,8 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 
 module Hdtv
   class Application < Rails::Application
+    config.encoding = 'utf-8'
+
     config.paths.posters 'public/images/posters', :load_path => false
     config.paths.thumbnails 'public/images/thumbnails', :load_path => false
     config.paths.repos 'media/repos', :load_path => false
