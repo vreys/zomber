@@ -135,19 +135,20 @@ form.large h1 > span {
 }
 
 form.large .field_wrap input[type=text],
-   form.large .field_wrap input[type=password] {
-      border: 2px solid #c1cbae;
-      padding: 15px;
-      width: 100%;
-      font-size: 42px;
-      border-radius: 8px;
-      -moz-border-radius: 8px;
-      -webkit-border-radius: 8px;
-      box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      background-color: #f4fce3;
-   }
+   form.large .field_wrap input[type=password],
+      form.large .field_wrap input[type=email] {
+        border: 2px solid #c1cbae;
+        padding: 15px;
+        width: 100%;
+        font-size: 42px;
+        border-radius: 8px;
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        background-color: #f4fce3;
+    }
 
 form.large .field_with_errors input[type=text],
    form.large .field_with_errors input[type=password] {
