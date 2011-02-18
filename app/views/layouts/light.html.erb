@@ -28,7 +28,7 @@
         <%= render_logo %>
       </div>
       
-      <%= render_messages %>
+      <%= render_messages unless flash.empty? %>
 
       <%= yield %>
 
