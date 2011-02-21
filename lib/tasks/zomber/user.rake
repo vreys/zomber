@@ -31,7 +31,27 @@ namespace :user do
         say(" <%= color('Приглашение отправлено по адресу <#{user.email}>', :success) %>")
 
         if Rails.env.development?
-          say(" <%= color('Invitation token: #{user.invitation_token}', :notice) %>")
+
+          user.login = ''
+          until user.valid?
+            login = ask("Логин пользователя:")
+            user.login = login
+            user.valid?
+
+            say(" <%= color('#{user.errors.full_messages}', :notice) %>")
+          end
+
+          user.password = ''
+          until user.valid?
+            password = ask("Пароль пользователя:")
+            user.password = password
+            user.valid?
+
+            say(" <%= color('#{user.errors.full_messages}', :notice) %>")
+          end
+
+          User.accept_invitation!(:invitation_token => user.invitation_token, :password => password, :login => login)
+          say(" <%= color('И автоматически принято(можно сразу логиниться)', :success) %>")
         end
       else
         user.errors.full_messages.each do |m|
