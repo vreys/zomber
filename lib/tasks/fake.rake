@@ -31,7 +31,8 @@ namespace :fake do
             src = test_video + '.' + format
             dst = episode_file + '.' + format
             
-            FileUtils.cp(src, dst)
+            FileUtils.symlink(src, dst)
+            puts "Fake video content(#{dst}) added to the episode"
           end
         end
       end
